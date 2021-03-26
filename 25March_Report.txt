@@ -1,0 +1,15 @@
+25 March 2021
+Decided the dependencies for the project
+Choice for the model of the app - (Running the App model on SQL V/S MongoDB)
+Created Git repository and added access permisions for the team.
+Set the structure for the project
+
+
+Decided the structure of the database
+
+-------------------------------------------------------------------------------------------------------------
+Sprint 1 - 
+25 - 30 March, 2021
+
+
+For the first 5 user stories
