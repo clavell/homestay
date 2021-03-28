@@ -35,17 +35,9 @@
     <input type="text" th:field="*{college}" id="college" placeholder="College"><br><br>
     <span th:if="${#fields.hasErrors('college')}" th:errors="*{college}"></span>
 
-    <label for="date_available_from">Want to Start Renting At</label>
-    <input type="date" th:field="*{date_available_from}" id="date_available_from" placeholder="Date_available_from"><br><br>
-    <span th:if="${#fields.hasErrors('date_available_from')}" th:errors="*{date_available_from}"></span>
-
-    <label for="duration">Duration(Months)</label>
-    <input type="int" th:field="*{duration}" id="duration" placeholder="Duration"><br><br>
-    <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
-
-    <label for="description">About Student</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="description"><br><br>
-    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+    <label for="about_student">About Student</label>
+    <input type="text" th:field="*{about_student}" id="about_student" placeholder="about_student"><br><br>
+    <span th:if="${#fields.hasErrors('about_student')}" th:errors="*{about_student}"></span>
 
     <!--    Only available to User -->
     <input type="submit" value="Update Profile">

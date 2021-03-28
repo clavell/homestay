@@ -10,7 +10,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Single Listing</title>
+    <title>Add a Listing</title>
 </head>
 <body>
 
@@ -58,14 +58,12 @@
     <span th:if="${#fields.hasErrors('room_description')}" th:errors="*{room_description}"></span>
 
     <!--    Only available to Admin-->
-    <input type="submit" value="Update Listing">
+    <input type="submit" value="Add Listing">
 
 </form>
 <!--Only available to Admin-->
-<a href="requests.html"><h2>Check Requests</h2></a>
+<a href="admin_home.html"><h2>Go Back</h2></a>
 
-<!--Only available to Student-->
-<a href="#"><h2>Request for rental</h2></a>
 
 </body>
 </html>
