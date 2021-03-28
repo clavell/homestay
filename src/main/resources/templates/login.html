@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{/app.css}"/>
+    <title>Login Screen</title>
+</head>
+<body>
+<form action="#" th:action="@{/login}" th:object="${user}" method="post">
+    <label for="ID">Enter ID</label>
+    <input type="text" th:field="*{ID}" id="ID" placeholder="abc@xyz.com"><br><br>
+    <span th:if="${#fields.hasErrors('ID')}" th:errors="*{ID}"></span>
+    <label for="password">Enter Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Enter Password"><br><br>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    <input type="submit" value="LOGIN">
+</form>
+
+</body>
+</html>
