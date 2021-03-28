@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--spring boot version 2.4.4-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -17,6 +18,27 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>webjars-locator</artifactId>
+			<version>0.40</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.6.0-1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
