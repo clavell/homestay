@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Student Profile</title>
+</head>
+<body>
+
+<img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+     alt="Avatar" style="width:50%">
+<form action="#"
+      th:action="@{/update/{id}(id=${user.id})}"
+      th:object="${user}"
+      method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+    <label for="nationality">Nationality</label>
+    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
+    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+    <label for="phone">Phone</label>
+    <input type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
+    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+
+    <label for="college">College</label>
+    <input type="text" th:field="*{college}" id="college" placeholder="College"><br><br>
+    <span th:if="${#fields.hasErrors('college')}" th:errors="*{college}"></span>
+
+    <label for="date_available_from">Want to Start Renting At</label>
+    <input type="date" th:field="*{date_available_from}" id="date_available_from" placeholder="Date_available_from"><br><br>
+    <span th:if="${#fields.hasErrors('date_available_from')}" th:errors="*{date_available_from}"></span>
+
+    <label for="duration">Duration(Months)</label>
+    <input type="int" th:field="*{duration}" id="duration" placeholder="Duration"><br><br>
+    <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
+
+    <label for="description">About Student</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="description"><br><br>
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+    <!--    Only available to User -->
+    <input type="submit" value="Update Profile">
+
+</form>
+<!--Only Available to Admin-->
+<a href="requests.html"><h2>Go Back</h2></a>
+
+<!--Only Available to Admin-->
+<a href="student_home.html"><h2>Go Back to Listings</h2></a>
+
+</body>
+</html>

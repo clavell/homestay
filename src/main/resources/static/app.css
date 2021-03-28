@@ -1,0 +1,46 @@
+body {
+    background-color: #FFF;
+}
+
+.bold                { font-weight:      600;        }
+.blue                { color:            #286090;    }
+.top-padding         { padding-top:      0.50em;     }
+.top-banner          { top:              0;
+                      left:              0;
+                      right:             0;
+                      z-index:           1050;
+                      height:            20em;
+                      position:          fixed;
+                      background-image:  url(/Images/arm1.png); }
+.containment        { margin:            auto;
+                      width:             400px;      }
+.jumbotron          { background-color:  white;      }
+.form-control       { color:             #286090;    }
+.form-control:focus { color:             dodgerblue; }
+.navbar-top-fixed   { left:              0;
+                      right:             0;
+                      top:               20em;
+                      z-index:           1100;
+                      position:          fixed;
+                      border-width:      0 0 1px; }
+.common-font        { font-family:       Georgia, Garamond, 'Times New Roman', serif; }
+.navbar-top-fixed .navbar-collapse { max-height: 340px; }
+
+@media (min-width: 768px) {
+    .navbar-top-fixed .navbar-collapse {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+@media (max-device-width: 480px) and (orientation: landscape) {
+    .navbar-top-fixed .navbar-collapse {
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-top-fixed {
+        border-radius: 0;
+    }
+}
