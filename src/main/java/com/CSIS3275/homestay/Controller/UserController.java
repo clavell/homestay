@@ -27,6 +27,19 @@ public class UserController {
     private Double prodPrice;
     private String prodImage;
 
+    @GetMapping("/newlogin")
+    public String showSignInForm(Model model){
+        model.addAttribute("user", new User());
+        return "newlogin";
+    }
+
+    @GetMapping("/logging_in")
+    public String loggingIn(Model model , @RequestParam String email, @RequestParam String name )
+    {
+        String placeholder = email;
+        return "test";
+    }
+
     @GetMapping("/login")
     public String showSignUpForm(User user) {
         return "login";
@@ -46,7 +59,7 @@ public class UserController {
     public String student_home(Model model , @RequestParam String email, @RequestParam String password ) {
         String emailr = email;
         String passwordr = password;
-        this.model = model;
+//        this.model = model;
 //        String id = model.addAttribute("userID", userRepository.findById().get());
         model.addAttribute("users", userRepository.findAll());
         return "index";
