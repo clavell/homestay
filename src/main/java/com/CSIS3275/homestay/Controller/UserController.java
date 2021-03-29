@@ -33,11 +33,14 @@ public class UserController {
     }
 
     @GetMapping("/logging_in")
-    public String loggingIn(@ModelAttribute("user") User user)
+    public String loggingIn(Model model, @ModelAttribute("user") User user)
     {
         User userFromDB = userRepository.findByEmail(user.getEmail());
-        if(userFromDB!=null)
+        if(userFromDB!=null && userFromDB.getPassword().equals( user.getPassword())) {
+            model.addAttribute("user",userFromDB);
+
             return "test";
+        }
 //        model.addAttribute("message", "login failed");
         return "newlogin";
     }
