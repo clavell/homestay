@@ -38,7 +38,7 @@ public class UserController {
         User userFromDB = userRepository.findByEmail(user.getEmail());
         if(userFromDB!=null)
             return "test";
-        model.addAttribute("message", "login failed");
+//        model.addAttribute("message", "login failed");
         return "newlogin";
     }
 
