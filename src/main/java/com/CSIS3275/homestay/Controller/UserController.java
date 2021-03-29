@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @Controller
 public class UserController {
 
@@ -33,7 +35,11 @@ public class UserController {
     @GetMapping("/logging_in")
     public String loggingIn(@ModelAttribute("user") User user)
     {
-        return "test";
+        User userFromDB = userRepository.findByEmail(user.getEmail());
+        if(userFromDB!=null)
+            return "test";
+        model.addAttribute("message", "login failed");
+        return "newlogin";
     }
 
     @GetMapping("/login")
