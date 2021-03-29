@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
@@ -34,9 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/logging_in")
-    public String loggingIn(Model model , @RequestParam String email, @RequestParam String name )
+    public String loggingIn(@ModelAttribute("user") User user)
     {
-        String placeholder = email;
         return "test";
     }
 
