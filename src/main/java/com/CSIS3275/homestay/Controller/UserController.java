@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @Controller
 public class UserController {
@@ -26,6 +25,25 @@ public class UserController {
     private String prodDesc;
     private Double prodPrice;
     private String prodImage;
+
+    @GetMapping("/newlogin")
+    public String showSignInForm(Model model){
+        model.addAttribute("user", new User());
+        return "newlogin";
+    }
+
+    @GetMapping("/logging_in")
+    public String loggingIn(Model model, @ModelAttribute("user") User user)
+    {
+        User userFromDB = userRepository.findByEmail(user.getEmail());
+        if(userFromDB!=null && userFromDB.getPassword().equals( user.getPassword())) {
+            model.addAttribute("user",userFromDB);
+
+            return "test";
+        }
+//        model.addAttribute("message", "login failed");
+        return "newlogin";
+    }
 
     @GetMapping("/login")
     public String showSignUpForm(User user) {
@@ -46,7 +64,7 @@ public class UserController {
     public String student_home(Model model , @RequestParam String email, @RequestParam String password ) {
         String emailr = email;
         String passwordr = password;
-        this.model = model;
+//        this.model = model;
 //        String id = model.addAttribute("userID", userRepository.findById().get());
         model.addAttribute("users", userRepository.findAll());
         return "index";

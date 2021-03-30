@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" th:href="@{/app.css}"/>
+    <title>Login Screen</title>
+</head>
+<body>
+<form th:action="@{/logging_in}" th:object="${user}" method="get">
+    <label for="email">Enter Email</label>
+    <input type="text" id="email" th:field="*{email}" placeholder="abc@xyz.com"/><br><br>
+    <!--    <span th:if="${#fields.hasErrors('ID')}" th:errors="*{ID}"></span>-->
+    <label for="password">Enter Password</label>
+    <input type="text" id="password" th:field="*{password}" placeholder="Enter Password"/><br><br>
+    <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
+    <input type="submit" value="LOGIN">
+</form>
+
+</body>
+</html>
