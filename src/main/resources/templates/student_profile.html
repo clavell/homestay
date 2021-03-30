@@ -12,7 +12,7 @@
 <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
      alt="Avatar" style="width:50%">
 <form action="#"
-      th:action="@{/update/{id}(id=${user.id})}"
+      th:action="@{/student_profile}"
       th:object="${user}"
       method="post">
     <label for="name">Name</label>
@@ -28,16 +28,16 @@
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
     <label for="phone">Phone</label>
-    <input type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
+    <input type="text" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
     <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
 
-    <label for="college">College</label>
-    <input type="text" th:field="*{college}" id="college" placeholder="College"><br><br>
-    <span th:if="${#fields.hasErrors('college')}" th:errors="*{college}"></span>
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
-    <label for="about_student">About Student</label>
-    <input type="text" th:field="*{about_student}" id="about_student" placeholder="about_student"><br><br>
-    <span th:if="${#fields.hasErrors('about_student')}" th:errors="*{about_student}"></span>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password"><br><br>
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
     <!--    Only available to User -->
     <input type="submit" value="Update Profile">
