@@ -3,6 +3,7 @@ package com.CSIS3275.homestay.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
@@ -20,10 +21,13 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue
-    private long id;
-    private String password;
-    private String name;
-    private String email;
+    long id;
+    String password;
+    String name;
+    String email;
+    String description;
+    String nationality;
+    String type;
+    String phone;
 
 }
