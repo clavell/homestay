@@ -34,7 +34,7 @@ public class RepositoryTests {
         Optional<User> DBUserOpt = userRepository.findById(user.getId());
         User DBUser = DBUserOpt.get();
 
-        assertTrue(user.getId() == DBUser.getId());
+        assertTrue(user.equals(DBUser));
         userRepository.delete(user);
     }
 

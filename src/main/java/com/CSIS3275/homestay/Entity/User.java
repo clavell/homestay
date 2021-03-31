@@ -1,9 +1,6 @@
 package com.CSIS3275.homestay.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Component
+@EqualsAndHashCode
 @Document(collection = "User")
 public class User {
 
