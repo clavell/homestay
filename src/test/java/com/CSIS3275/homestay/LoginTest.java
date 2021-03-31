@@ -2,13 +2,17 @@ package com.CSIS3275.homestay;
 
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.io.UnsupportedEncodingException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,6 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 @AutoConfigureMockMvc
 public class LoginTest {
+
+    @Value("${login.failed.message}")
+    String loginFailedMessage;
 
     @Autowired
     private MockMvc mockMvc;
@@ -53,9 +60,28 @@ public class LoginTest {
         String content = result.getResponse().getContentAsString();
 
         assertThat(content).contains("me@me.com");
-        User userEntity = userRepository.findByEmail(user.getEmail());
-        assertThat(userEntity.getEmail()).isEqualTo(user.getEmail());
+
     }
 
+    @Test
+    void failedLoginShowsLoginFailedMessage() throws Exception {
+
+        User user = new User();
+        user.setId(99);
+        user.setPassword("asdf");
+        user.setName("me");
+        user.setEmail("iwillNeverBeEntered@Ever.com");
+        MvcResult result = mockMvc.perform(get("/logging_in", 42L)
+//                .contentType("application/json")
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+        String content = result.getResponse().getContentAsString();
+
+        assertThat(content).contains(loginFailedMessage);
+
+    }
 }
 
