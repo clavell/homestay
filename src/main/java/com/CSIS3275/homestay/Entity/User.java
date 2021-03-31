@@ -2,6 +2,7 @@ package com.CSIS3275.homestay.Entity;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
@@ -17,12 +18,11 @@ import javax.persistence.Table;
 @EqualsAndHashCode
 @Document(collection = "User")
 public class User {
-
     @Id
-    long id;
+    @MongoId
+    String email;
     String password;
     String name;
-    String email;
     String description;
     String nationality;
     String type;

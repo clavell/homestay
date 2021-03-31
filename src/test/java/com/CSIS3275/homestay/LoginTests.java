@@ -49,11 +49,10 @@ public class LoginTests {
     @BeforeEach
     void CreateTheBasicUserAndUploadToDB(){
         user = new User();
-        user.setId(99);
         user.setPassword("asdf");
         user.setName("me");
         user.setEmail("me@me.com");
-        if(userRepository.findById(user.getId()) != null)
+        if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
         userRepository.insert(user);
     }
@@ -130,7 +129,7 @@ public class LoginTests {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
 //just make sure that the page loads
-        assertThat(content).contains("");
+        assertThat(content).contains(loginFailedMessage);
 
     }
 

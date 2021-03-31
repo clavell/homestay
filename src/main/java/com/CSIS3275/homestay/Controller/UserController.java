@@ -2,7 +2,7 @@ package com.CSIS3275.homestay.Controller;
 
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.UserRepository;
-import com.CSIS3275.homestay.Service.ProductService;
+//import com.CSIS3275.homestay.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,8 +18,8 @@ public class UserController {
     @Value("${login.failed.message}")
     String loginFailedMessage;
 
-    @Autowired
-    private ProductService service;
+//    @Autowired
+//    private ProductService service;
 
     @Autowired
     private UserRepository userRepository;
@@ -30,17 +30,28 @@ public class UserController {
     private Double prodPrice;
     private String prodImage;
 
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model){
+        model.addAttribute("user", new User());
+        return "register";
+    }
+
     @GetMapping("/newlogin")
     public String showSignInForm(Model model){
         model.addAttribute("user", new User());
         return "newlogin";
     }
 
+    @PostMapping("/register")
+    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
+        return "test";
+    }
+
     @GetMapping("/logging_in")
     public String loggingIn(Model model, @ModelAttribute("user") User user)
     {
         User userFromDB = userRepository.findByEmail(user.getEmail());
-        if(userFromDB!=null && userFromDB.getPassword().equals( user.getPassword())) {
+        if(userFromDB!=null && userFromDB.getPassword()!= null && userFromDB.getPassword().equals( user.getPassword())) {
             model.addAttribute("user",userFromDB);
 
             return "test";
@@ -90,17 +101,17 @@ public class UserController {
     }
 
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id, User user,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
-        }
-
-        userRepository.save(user);
-        return "redirect:/index";
-    }
+//    @PostMapping("/update/{id}")
+//    public String updateUser(@PathVariable("id") long id, User user,
+//                             BindingResult result, Model model) {
+//        if (result.hasErrors()) {
+//            user.setId(id);
+//            return "update-user";
+//        }
+//
+//        userRepository.save(user);
+//        return "redirect:/index";
+//    }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id, Model model) {

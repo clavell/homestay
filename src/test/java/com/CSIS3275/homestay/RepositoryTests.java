@@ -26,13 +26,12 @@ public class RepositoryTests {
         User user = new User();
         user.setEmail("me2@me2.com");
         user.setName("me2");
-        user.setId(22);
 
-        if(userRepository.findById(user.getId()) != null)
+        if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
         userRepository.insert(user);
-        Optional<User> DBUserOpt = userRepository.findById(user.getId());
-        User DBUser = DBUserOpt.get();
+        User DBUser = userRepository.findByEmail(user.getEmail());
+
 
         assertTrue(user.equals(DBUser));
         userRepository.delete(user);
@@ -45,9 +44,8 @@ public class RepositoryTests {
         user.setPassword("asdf");
         user.setEmail("me2@me2.com");
         user.setName("me2");
-        user.setId(23);
 
-        if(userRepository.findById(user.getId()) != null)
+        if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
         userRepository.insert(user);
         user.setPassword(null);
