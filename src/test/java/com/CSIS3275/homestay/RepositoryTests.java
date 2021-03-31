@@ -38,4 +38,21 @@ public class RepositoryTests {
         userRepository.delete(user);
     }
 
+    @Test
+    void nullifyingAPasswordFieldRemovesItFromTheRepository(){
+        //go and check this in the database yourself..
+        User user = new User();
+        user.setPassword("asdf");
+        user.setEmail("me2@me2.com");
+        user.setName("me2");
+        user.setId(23);
+
+        if(userRepository.findById(user.getId()) != null)
+            userRepository.delete(user);
+        userRepository.insert(user);
+        user.setPassword(null);
+        userRepository.save(user);
+
+    }
+
 }
