@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //}
 )
 @AutoConfigureMockMvc
-public class LoginTest {
+public class LoginTests {
 
     @Value("${login.failed.message}")
     String loginFailedMessage;
