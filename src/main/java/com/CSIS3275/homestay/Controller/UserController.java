@@ -4,6 +4,7 @@ import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.UserRepository;
 import com.CSIS3275.homestay.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,9 @@ import java.util.Collection;
 
 @Controller
 public class UserController {
+
+    @Value("${login.failed.message}")
+    String loginFailedMessage;
 
     @Autowired
     private ProductService service;
@@ -41,7 +45,7 @@ public class UserController {
 
             return "test";
         }
-//        model.addAttribute("message", "login failed");
+        model.addAttribute("message", loginFailedMessage);
         return "newlogin";
     }
 
