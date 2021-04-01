@@ -45,8 +45,8 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(Model model, @ModelAttribute("user") User user){
 //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
-
-        return "newlogin";
+        userRepository.insert(user);
+        return "redirect:/logging_in";
     }
 
     @GetMapping("/logging_in")

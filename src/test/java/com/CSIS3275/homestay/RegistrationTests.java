@@ -35,13 +35,13 @@ public class RegistrationTests {
         user.setEmail("registrationtest@test.com");
         if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
-        MvcResult result = mockMvc.perform(post("/register", 42L)
+        mockMvc.perform(post("/register", 42L)
 //                .contentType("application/json")
-                .param("email", "me@me.com")
-                .param("password", "asdf")
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .param("name", user.getName())
                 .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(status().is3xxRedirection());
 
          assertTrue(userRepository.findByEmail(user.getEmail()).equals(user));
     }
