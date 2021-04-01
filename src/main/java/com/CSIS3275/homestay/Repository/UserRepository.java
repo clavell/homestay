@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends MongoRepository<User,Long> {
+public interface UserRepository extends MongoRepository<User, String> {
 
     List<User> findByName(String name);
     User findByEmail(String email);

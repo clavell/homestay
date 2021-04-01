@@ -3,13 +3,8 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" th:href="@{/app.css}"/>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Student Login</title>
 </head>
@@ -37,7 +32,19 @@
         </div>
     </div>
 </div>
-<h2><a href="student_profile.html">Edit/Customize your profile</a></h2>
+<h2><span th:value="*{user.id}"></span></h2>
+
+<form th:action="@{/student_profile}" th:object="${user}" method="get">
+    <input type="hidden" th:field="*{id}"></input>
+    <input type="hidden" th:field="*{name}"></input>
+    <input type="hidden" th:field="*{email}"></input>
+    <input type="hidden" th:field="*{password}"></input>
+    <input type="hidden" th:field="*{description}"></input>
+    <input type="hidden" th:field="*{nationality}"></input>
+    <input type="hidden" th:field="*{phone}"></input>
+    <input type="submit" value="Edit/Customize Profile">
+</form>
+
 <h2><a href="request_history.html">Check Request Status</a></h2>
 </body>
 </html>
