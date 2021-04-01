@@ -38,6 +38,7 @@ public class RegistrationTests {
     void prepareDB(){
         user = new User();
         user.setPassword("asdf");
+        user.setPassword2("asdf");
         user.setName("registrationPerson");
         user.setEmail("registrationtest@test.com");
         if(userRepository.findByEmail(user.getEmail()) != null)
@@ -56,6 +57,7 @@ public class RegistrationTests {
         mockMvc.perform(post("/register", 42L)
                 .param("email", user.getEmail())
                 .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
                 .param("name", user.getName())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
@@ -64,11 +66,26 @@ public class RegistrationTests {
     }
 
     @Test
+    void registeringUserWithWrongPasswordDoesNotAddThemToDatabase() throws Exception{
+
+        mockMvc.perform(post("/register", 42L)
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .param("password2", "not the password")
+                .param("name", user.getName())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+
+        assertNull(userRepository.findByEmail(user.getEmail()));
+    }
+
+    @Test
     void registeringUserBringsToProfilePage() throws Exception{
 
         MvcResult result = mockMvc.perform(post("/register", 42L)
                 .param("email", user.getEmail())
                 .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
                 .param("name", user.getName())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
@@ -76,5 +93,23 @@ public class RegistrationTests {
 
         String content = result.getResponse().getContentAsString();
         assertThat(content).contains("registrationPerson");
+        assertThat(content).contains("Profile");
+    }
+
+    @Test
+    void passwordsMustMatchToRegisterUser()throws Exception{
+
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .param("password2", "not the password")
+                .param("name", user.getName())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains("<form action=\"/register\"");
     }
 }

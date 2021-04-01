@@ -18,6 +18,8 @@ public class UserController {
     @Value("${login.failed.message}")
     String loginFailedMessage;
 
+    @Value("${registration.failed.message}")
+    String registrationFailedMessage;
 //    @Autowired
 //    private ProductService service;
 
@@ -43,10 +45,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @ModelAttribute("user") User user){
-//    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
-        userRepository.insert(user);
-        return "test";
+    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password2){
+        //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
+        if(password2.equals(user.getPassword())) {
+            userRepository.insert(user);
+            return "test";
+        }
+//        model.addAttribute("registrationFailedMessage", registrationFailedMessage);
+        return "register";
     }
 
     @GetMapping("/logging_in")
