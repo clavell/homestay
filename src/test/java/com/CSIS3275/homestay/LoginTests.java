@@ -118,8 +118,12 @@ public class LoginTests {
 
     @Test
     void nonexistentPasswordInDBDoesNotCrashProgram() throws Exception {
+        //remove password from the user
         user.setPassword(null);
         userRepository.save(user);
+
+        //set password to something again
+        user.setPassword("asdf");
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
 //                .contentType("application/json")
                 .param("email", user.getEmail())
