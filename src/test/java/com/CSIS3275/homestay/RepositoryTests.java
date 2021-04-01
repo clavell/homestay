@@ -27,8 +27,9 @@ public class RepositoryTests {
         user.setEmail("me2@me2.com");
         user.setName("me2");
 
-        if(userRepository.findByEmail(user.getEmail()) != null)
-            userRepository.delete(user);
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        if(dbUser != null)
+            userRepository.delete(dbUser);
         userRepository.insert(user);
         User DBUser = userRepository.findByEmail(user.getEmail());
 
@@ -45,8 +46,9 @@ public class RepositoryTests {
         user.setEmail("me2@me2.com");
         user.setName("me2");
 
-        if(userRepository.findByEmail(user.getEmail()) != null)
-            userRepository.delete(user);
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        if(dbUser != null)
+            userRepository.delete(dbUser);
         userRepository.insert(user);
         user.setPassword(null);
         userRepository.save(user);

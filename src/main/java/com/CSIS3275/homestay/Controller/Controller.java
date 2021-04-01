@@ -67,6 +67,7 @@ public class Controller {
     @GetMapping("/newlogin")
     public String showSignInForm(Model model) {
         model.addAttribute("user", new User());
+//        model.addAttribute("message",null);
         return "newlogin";
     }
 
@@ -74,7 +75,7 @@ public class Controller {
     @GetMapping("/logging_in")
     public String loggingIn(Model model, @ModelAttribute("user") User user) {
         User userFromDB = userRepository.findByEmail(user.getEmail());
-        if (userFromDB != null && userFromDB.getPassword().equals(user.getPassword())) {
+        if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
             if (userFromDB.getType().equals("Student")) {
@@ -85,6 +86,7 @@ public class Controller {
             }
         }
         //If the user doesn't exist it won't log in
+        model.addAttribute("message", loginFailedMessage);
         return "newlogin";
     }
 

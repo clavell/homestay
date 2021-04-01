@@ -47,8 +47,9 @@ public class RegistrationTests {
         user.setType("Student");
         user.setDescription("Looking for a place to stay");
         user.setNationality("American");
-        if(userRepository.findByEmail(user.getEmail()) != null)
-            userRepository.delete(user);
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        if(dbUser != null)
+            userRepository.delete(dbUser);
     }
 
     @Test
