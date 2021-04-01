@@ -30,7 +30,9 @@ public class UserController {
     public String loggingIn(Model model, @ModelAttribute("user") User user)
     {
         User userFromDB = userRepository.findByEmail(user.getEmail());
-        if(userFromDB!=null && userFromDB.getPassword().equals( user.getPassword())) {
+        System.out.println("User from DB " + userFromDB);
+        System.out.println("Our User " + user);
+        if(userFromDB!=null && userFromDB.getPassword().equals(user.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user",userFromDB);
             if(userFromDB.getType().equals("Student")){

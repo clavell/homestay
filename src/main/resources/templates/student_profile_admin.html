@@ -16,35 +16,34 @@
       th:object="${user}"
       method="post">
     <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name" readonly><br><br>
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
     <label for="nationality">Nationality</label>
-    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
+    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality" readonly><br><br>
     <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
 
     <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email" readonly><br><br>
     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 
     <label for="phone">Phone</label>
-    <input type="text" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
+    <input type="text" th:field="*{phone}" id="phone" placeholder="Phone" readonly><br><br>
     <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
 
     <label for="description">Description</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description" readonly><br><br>
     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
     <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password" placeholder="Password"><br><br>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password" readonly><br><br>
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 
-    <!--    Only available to User -->
-    <input type="submit" value="Update Profile">
 
 </form>
-<!--Only Available to Student-->
-<a href="student_home.html"><h2>Go Back to Listings</h2></a>
+<!--Only Available to Admin-->
+<a href="requests.html"><h2>Go Back</h2></a>
+
 
 </body>
 </html>
