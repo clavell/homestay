@@ -45,6 +45,12 @@ public class RegistrationTests {
     }
 
     @Test
+    void thereisNoRegistrationTestUserInTheDatabaseAfterDelete(){
+        User expectedNullUser = userRepository.findByEmail(user.getEmail());
+        assertNull(expectedNullUser);
+    }
+
+    @Test
     void registeringUserAddsThemToDatabase() throws Exception{
 
         mockMvc.perform(post("/register", 42L)
