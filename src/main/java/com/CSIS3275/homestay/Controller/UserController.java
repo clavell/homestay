@@ -47,7 +47,8 @@ public class UserController {
     @PostMapping("/register")
     public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password2){
         //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
-        if(password2.equals(user.getPassword())) {
+        String email = user.getEmail();
+        if(user.getPassword2().equals(user.getPassword()) && email != null) {
             userRepository.insert(user);
             return "test";
         }

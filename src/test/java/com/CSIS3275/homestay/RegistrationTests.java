@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.thymeleaf.spring5.expression.Mvc;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +43,7 @@ public class RegistrationTests {
         user.setPassword2("asdf");
         user.setName("registrationPerson");
         user.setEmail("registrationtest@test.com");
+        user.setPhone("12345678");
         if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
     }
@@ -59,6 +62,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
+                .param("phone", user.getPhone())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -87,6 +91,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
+                .param("phone", user.getPhone())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -112,4 +117,42 @@ public class RegistrationTests {
         assertThat(content).contains("registrationPerson");
         assertThat(content).contains("<form action=\"/register\"");
     }
+
+    @Test
+    void emailMustExistToRegister() throws Exception {
+        List<User> registrationPersons = userRepository.findByName("registrationPerson");
+        if(registrationPersons != null)
+            for (User person:registrationPersons
+                 ) {
+
+            userRepository.delete(person);
+            }
+
+        mockMvc.perform(post("/register", 42L)
+                .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
+                .param("name", user.getName())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+
+        assertTrue(userRepository.findByName("registrationPerson").isEmpty());
+
+    }
+
+    @Test
+    void missingEmailReturnsUserToRegistrationPage()throws Exception{
+
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
+                .param("name", user.getName())
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains("<form action=\"/register\"");
+    }
+
 }
