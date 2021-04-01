@@ -46,7 +46,7 @@ public class UserController {
     public String registerUser(Model model, @ModelAttribute("user") User user){
 //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
         userRepository.insert(user);
-        return "redirect:/logging_in";
+        return "test";
     }
 
     @GetMapping("/logging_in")
