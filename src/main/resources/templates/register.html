@@ -23,6 +23,14 @@
     <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
     <!--    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>-->
 
+    <label for="type">Type</label>
+    <input type="text" th:field="*{type}" id="type" placeholder="Type"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>-->
+    
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
     <!--    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
@@ -31,13 +39,13 @@
         <input type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
     <!--    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>-->
 
-<!--        <label for="college">College</label>-->
-<!--        <input type="text" th:field="*{college}" id="college" placeholder="College"><br><br>-->
-    <!--    <span th:if="${#fields.hasErrors('college')}" th:errors="*{college}"></span>-->
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" placeholder="Password"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
 
-<!--        <label for="about_student">About Student</label>-->
-<!--        <input type="text" th:field="*{about_student}" id="about_student" placeholder="about_student"><br><br>-->
-    <!--    <span th:if="${#fields.hasErrors('about_student')}" th:errors="*{about_student}"></span>-->
+    <label for="password2">Re-type Password</label>
+    <input type="password" th:field="*{password2}" id="password2" placeholder="Re-type Password"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>-->
 
     <!--    Only available to User -->
     <input type="submit" value="Register">
