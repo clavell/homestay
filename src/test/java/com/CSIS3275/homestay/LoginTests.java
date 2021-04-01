@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.io.UnsupportedEncodingException;
 
@@ -46,39 +47,51 @@ public class LoginTests {
 
     private User user;
 
+    private LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+
     @BeforeEach
     void CreateTheBasicUserAndUploadToDB(){
         user = new User();
         user.setPassword("asdf");
         user.setName("me");
         user.setEmail("me@me.com");
-        if(userRepository.findByEmail(user.getEmail()) != null)
-            userRepository.delete(user);
+        user.setType("Student");
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        if(dbUser != null)
+            userRepository.delete(dbUser);
         userRepository.insert(user);
+
+        requestParams.add("name", user.getName());
+        requestParams.add("password", user.getPassword());
+        requestParams.add("email", user.getEmail());
+        requestParams.add("type", user.getType());
+
+
     }
 
     @Test
     void LoginWorks() throws Exception {
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
-//                .contentType("application/json")
-                .param("email", "me@me.com")
-                .param("password", "asdf")
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
         String content = result.getResponse().getContentAsString();
 
-        assertThat(content).contains("me@me.com");
+        assertThat(content).contains("Student Home");
 
     }
 
     @Test
     void failedLoginShowsLoginFailedMessage() throws Exception {
         user.setEmail("NeverEnterThisEmailIntoTheDB@Ever.com");
+        requestParams.remove("email");
+        requestParams.add("email",user.getEmail());
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
-//                .contentType("application/json")
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
+                .params(requestParams)
+////                .contentType("application/json")
+//                .param("email", user.getEmail())
+//                .param("password", user.getPassword())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -105,29 +118,29 @@ public class LoginTests {
     void ifFieldMissingLoginStillWorks() throws Exception {
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
 //                .contentType("application/json")
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
+                .params(requestParams)
+//                .param("email", user.getEmail())
+//                .param("password", user.getPassword())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
         String content = result.getResponse().getContentAsString();
 //just make sure that the page loads
-        assertThat(content).contains("Student Profile");
+        assertThat(content).contains("Student Home");
 
     }
 
     @Test
     void nonexistentPasswordInDBDoesNotCrashProgram() throws Exception {
         //remove password from the user
-        user.setPassword(null);
-        userRepository.save(user);
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        dbUser.setPassword(null);
+        userRepository.save(dbUser);
 
-        //set password to something again
-        user.setPassword("asdf");
+
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
 //                .contentType("application/json")
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
