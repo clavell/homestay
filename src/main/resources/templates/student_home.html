@@ -32,7 +32,6 @@
         </div>
     </div>
 </div>
-<h2><span th:value="*{user.id}"></span></h2>
 
 <form th:action="@{/student_profile}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}"></input>

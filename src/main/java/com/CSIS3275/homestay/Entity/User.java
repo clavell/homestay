@@ -16,10 +16,12 @@ import javax.persistence.Table;
 @Entity
 @Component
 @EqualsAndHashCode
-@Document(collection = "User")
+@ToString
+@Document(collection = "Users")
 public class User {
     @Id
-    @MongoId
+    String id;
+
     String email;
     String password;
     String password2;
@@ -28,5 +30,6 @@ public class User {
     String nationality;
     String type;
     String phone;
+
 
 }
