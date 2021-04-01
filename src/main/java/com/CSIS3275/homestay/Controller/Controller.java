@@ -1,6 +1,7 @@
 package com.CSIS3275.homestay.Controller;
 
 import com.CSIS3275.homestay.Entity.User;
+import com.CSIS3275.homestay.Repository.ListingRepository;
 import com.CSIS3275.homestay.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,9 @@ public class Controller {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ListingRepository listingRepository;
 
     //Creating a New User Getting and Posting
 
@@ -91,6 +95,7 @@ public class Controller {
     @GetMapping("/student_home")
     public String student_home(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("user", userRepository.findById(user.getId()));
+        model.addAttribute("listings",listingRepository.findAll());
         return "student_home";
     }
 
