@@ -44,6 +44,9 @@ public class RegistrationTests {
         user.setName("registrationPerson");
         user.setEmail("registrationtest@test.com");
         user.setPhone("12345678");
+        user.setType("Student");
+        user.setDescription("Looking for a place to stay");
+        user.setNationality("American");
         if(userRepository.findByEmail(user.getEmail()) != null)
             userRepository.delete(user);
     }
@@ -63,10 +66,11 @@ public class RegistrationTests {
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
                 .param("phone", user.getPhone())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
-         assertTrue(userRepository.findByEmail(user.getEmail()).equals(user));
+         assertTrue(userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()));
     }
 
     @Test
@@ -77,6 +81,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", "not the password")
                 .param("name", user.getName())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -92,6 +97,7 @@ public class RegistrationTests {
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
                 .param("phone", user.getPhone())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -109,6 +115,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", "not the password")
                 .param("name", user.getName())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -119,7 +126,7 @@ public class RegistrationTests {
     }
 
     @Test
-    void emailMustExistToRegister() throws Exception {
+    void emailMustExistToRegisterInDB() throws Exception {
         List<User> registrationPersons = userRepository.findByName("registrationPerson");
         if(registrationPersons != null)
             for (User person:registrationPersons
@@ -132,6 +139,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -146,6 +154,7 @@ public class RegistrationTests {
                 .param("password", user.getPassword())
                 .param("password2", user.getPassword2())
                 .param("name", user.getName())
+                .param("type",user.getType())
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -155,4 +164,52 @@ public class RegistrationTests {
         assertThat(content).contains("<form action=\"/register\"");
     }
 
+//    @Test
+//    void missingStudentOrHostTypeDoesNotAddUserToDB() throws Exception{
+//
+//        MvcResult result = mockMvc.perform(post("/register", 42L)
+//                .param("email", user.getEmail())
+//                .param("password", user.getPassword())
+//                .param("password2", user.getPassword2())
+//                .param("name", user.getName())
+//                .param("type",user.getType())
+//                .content(objectMapper.writeValueAsString(user)))
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//
+//    }
+
+    @Test
+    void missingStudentOrHostTypeSendsUserBackToRegistrationPage() throws Exception{
+
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
+                .param("name", user.getName())
+                .param("type","wrong value")
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains("<form action=\"/register\"");
+
+        result = mockMvc.perform(post("/register", 42L)
+                .param("email", user.getEmail())
+                .param("password", user.getPassword())
+                .param("password2", user.getPassword2())
+                .param("name", user.getName())
+//                .param("type","") missing type param
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        content = result.getResponse().getContentAsString();
+        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains("<form action=\"/register\"");
+
+    }
 }

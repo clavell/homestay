@@ -48,7 +48,7 @@ public class UserController {
     public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password2){
         //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
         String email = user.getEmail();
-        if(user.getPassword2().equals(user.getPassword()) && email != null) {
+        if(user.getPassword2().equals(user.getPassword()) && email != null && (user.getType() == "Host" || user.getType() == "Student")) {
             userRepository.insert(user);
             return "test";
         }
