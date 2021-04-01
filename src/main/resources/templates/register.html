@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Registration</title>
+</head>
+<body>
+
+<img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+     alt="Avatar" style="width:50%">
+<form action="#"
+      th:action="@{/register}"
+      th:object="${user}"
+      method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->
+
+    <label for="nationality">Nationality</label>
+    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>-->
+
+    <label for="type">Type</label>
+    <input type="text" th:field="*{type}" id="type" placeholder="Type"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>-->
+    
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
+
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
+
+        <label for="phone">Phone</label>
+        <input type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>-->
+
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" placeholder="Password"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
+
+    <label for="password2">Re-type Password</label>
+    <input type="password" th:field="*{password2}" id="password2" placeholder="Re-type Password"><br><br>
+    <!--    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>-->
+
+    <!--    Only available to User -->
+    <input type="submit" value="Register">
+
+</form>
+<!--Only Available to Admin-->
+<!--<a href="requests.html"><h2>Go Back</h2></a>-->
+
+<!--Only Available to Admin-->
+<!--<a href="student_home.html"><h2>Go Back to Listings</h2></a>-->
+
+</body>
+</html>

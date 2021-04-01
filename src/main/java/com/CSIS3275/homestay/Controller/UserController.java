@@ -2,8 +2,9 @@ package com.CSIS3275.homestay.Controller;
 
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.UserRepository;
-import com.CSIS3275.homestay.Service.ProductService;
+//import com.CSIS3275.homestay.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +17,22 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    @Value("${login.failed.message}")
+    String loginFailedMessage;
+
+    @Value("${registration.failed.message}")
+    String registrationFailedMessage;
+//    @Autowired
+//    private ProductService service;
 
     @Autowired
     UserRepository userRepository;
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model){
+        model.addAttribute("user", new User());
+        return "register";
+    }
 
     @GetMapping("/newlogin")
     public String showSignInForm(Model model){
@@ -26,26 +40,28 @@ public class UserController {
         return "newlogin";
     }
 
+    @PostMapping("/register")
+    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password2){
+        //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
+        String email = user.getEmail();
+        if(user.getPassword2().equals(user.getPassword()) && email != null && (user.getType() == "Host" || user.getType() == "Student")) {
+            userRepository.insert(user);
+            return "test";
+        }
+//        model.addAttribute("registrationFailedMessage", registrationFailedMessage);
+        return "register";
+    }
+
     @GetMapping("/logging_in")
     public String loggingIn(Model model, @ModelAttribute("user") User user)
     {
         User userFromDB = userRepository.findByEmail(user.getEmail());
-        System.out.println("User from DB " + userFromDB);
-        System.out.println("Our User " + user);
-        if(userFromDB!=null && userFromDB.getPassword().equals(user.getPassword())) {
-            System.out.println(userFromDB.getType());
+        if(userFromDB!=null && userFromDB.getPassword()!= null && userFromDB.getPassword().equals( user.getPassword())) {
             model.addAttribute("user",userFromDB);
-            if(userFromDB.getType().equals("Student")){
-                System.out.println(userFromDB);
-                return "student_home";
-            }
-            else if(userFromDB.getType().equals("Admin")){
-                return "admin_home";
-            }
+           return "test";
 
         }
-        System.out.println("User Trying to login" + user.getEmail());
-        System.out.println(""+user.getType());
+        model.addAttribute("message", loginFailedMessage);
         return "newlogin";
     }
 
@@ -74,14 +90,14 @@ public class UserController {
 //        return "index";
 //    }
 
-    @GetMapping("/student_profile")
-    public String student_profile(Model model , @ModelAttribute("user") User user ) {
-//        User userFromDB = userRepository.findByEmail(user.getEmail());
-        System.out.println("Hello Darkness");
-        System.out.println(user.getId());
-        model.addAttribute("user",user);
-        return "student_profile";
-    }
+//    @GetMapping("/student_profile")
+//    public String student_profile(Model model , @ModelAttribute("user") User user ) {
+////        User userFromDB = userRepository.findByEmail(user.getEmail());
+//        System.out.println("Hello Darkness");
+//        System.out.println(user.getId());
+//        model.addAttribute("user",user);
+//        return "student_profile";
+//    }
 
     @GetMapping("/index")
     public String showUserList(Model model) {
@@ -99,17 +115,17 @@ public class UserController {
     }
 
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") String id, User user,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
-        }
-
-        userRepository.save(user);
-        return "redirect:/index";
-    }
+//    @PostMapping("/update/{id}")
+//    public String updateUser(@PathVariable("id") String id, User user,
+//                             BindingResult result, Model model) {
+//        if (result.hasErrors()) {
+//            user.setId(id);
+//            return "update-user";
+//        }
+//
+//        userRepository.save(user);
+//        return "redirect:/index";
+//    }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") String id, Model model) {
