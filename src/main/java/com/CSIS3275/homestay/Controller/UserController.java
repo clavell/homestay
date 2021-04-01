@@ -58,7 +58,7 @@ public class UserController {
         User userFromDB = userRepository.findByEmail(user.getEmail());
         if(userFromDB!=null && userFromDB.getPassword()!= null && userFromDB.getPassword().equals( user.getPassword())) {
             model.addAttribute("user",userFromDB);
-           
+           return "test";
 
         }
         model.addAttribute("message", loginFailedMessage);
@@ -90,14 +90,14 @@ public class UserController {
 //        return "index";
 //    }
 
-    @GetMapping("/student_profile")
-    public String student_profile(Model model , @ModelAttribute("user") User user ) {
-//        User userFromDB = userRepository.findByEmail(user.getEmail());
-        System.out.println("Hello Darkness");
-        System.out.println(user.getId());
-        model.addAttribute("user",user);
-        return "student_profile";
-    }
+//    @GetMapping("/student_profile")
+//    public String student_profile(Model model , @ModelAttribute("user") User user ) {
+////        User userFromDB = userRepository.findByEmail(user.getEmail());
+//        System.out.println("Hello Darkness");
+//        System.out.println(user.getId());
+//        model.addAttribute("user",user);
+//        return "student_profile";
+//    }
 
     @GetMapping("/index")
     public String showUserList(Model model) {
@@ -115,17 +115,17 @@ public class UserController {
     }
 
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") String id, User user,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
-        }
-
-        userRepository.save(user);
-        return "redirect:/index";
-    }
+//    @PostMapping("/update/{id}")
+//    public String updateUser(@PathVariable("id") String id, User user,
+//                             BindingResult result, Model model) {
+//        if (result.hasErrors()) {
+//            user.setId(id);
+//            return "update-user";
+//        }
+//
+//        userRepository.save(user);
+//        return "redirect:/index";
+//    }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") String id, Model model) {
