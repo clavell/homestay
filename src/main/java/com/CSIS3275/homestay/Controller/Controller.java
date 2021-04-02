@@ -126,7 +126,7 @@ public class Controller {
         }
     }
 
-    @GetMapping("/requestStudent")
+    @GetMapping("/request_student")
     public String requestStudent(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("user", user);
         List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());

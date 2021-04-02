@@ -20,22 +20,15 @@
                 </a>
                 <div class="container">
                     <h4><b>Details</b></h4>
-                    <p th:text="${listing.address}" ></p>
-                    <p th:text="${listing.duration}" ></p>
-                    <p th:text="${listing.price}" ></p>
-                    <p th:text="${listing.room_description}" ></p>
-                    <p th:text="${listing.start_from}" ></p>
-<!--                    <p th:text="${listing.user_email_id}" ></p>-->
-                </div>
-            </div>
-            <div class="card">
-                <a href="single_listing.html">
-                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-                         alt="Avatar" style="width:20%">
-                </a>
-                <div class="container">
-                    <h4><b>Home</b></h4>
-                    <p>Price</p>
+                    Address - <p th:text="${listing.address}" ></p>
+                    Duration(Months) - <p th:text="${listing.duration}" ></p>
+                    Price (In CAD $) - <p th:text="${listing.price}" ></p>
+                    Description - <p th:text="${listing.room_description}" ></p>
+                    Available From - <p th:text="${listing.start_from}" ></p>
+                    <form th:action="@{/student_home}" th:object="${listing}" method="get">
+                        <input type="hidden" th:field="*{address}">
+                        <input type="submit" value="Request">
+                    </form>
                 </div>
             </div>
         </div>
@@ -53,7 +46,7 @@
     <input type="submit" value="Edit/Customize Profile">
 </form>
 
-<form th:action="@{/requestStudent}" th:object="${user}" method="get">
+<form th:action="@{/request_student}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}"></input>
     <input type="hidden" th:field="*{name}"></input>
     <input type="hidden" th:field="*{email}"></input>
