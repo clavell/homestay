@@ -45,7 +45,7 @@ public class Controller {
     public String registerUser(Model model, @ModelAttribute("user") User user, @RequestParam String password2) {
         //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
         String email = user.getEmail();
-        if (user.getPassword2().equals(user.getPassword()) && email != null && (user.getType() == "Admin" || user.getType() == "Student")) {
+        if (password2.equals(user.getPassword()) && email != null && (user.getType() == "Admin" || user.getType() == "Student")) {
             userRepository.insert(user);
             model.addAttribute("message",registrationSuccessMessage);
             return "newlogin";
