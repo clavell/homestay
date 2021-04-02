@@ -14,15 +14,15 @@ import javax.persistence.Id;
 @Component
 @EqualsAndHashCode
 @ToString
-@Document(collection = "Listings")
-public class Listings {
+@Document(collection = "Status")
+public class Status {
     @Id
     String id;
 
-    String address;
-    String duration;
-    String price;
-    String room_description;
-    String start_from;
-    String adminEmailId;
+    String status;
+    String listingId;
+    String adminId;
+    String adminEmail;
+    String studentId;
+    String studentEmail;
 }

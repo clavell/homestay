@@ -1,13 +1,18 @@
 package com.CSIS3275.homestay.Controller;
 
+import com.CSIS3275.homestay.Entity.Listings;
+import com.CSIS3275.homestay.Entity.Status;
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.ListingRepository;
+import com.CSIS3275.homestay.Repository.StatusRepository;
 import com.CSIS3275.homestay.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @org.springframework.stereotype.Controller
@@ -24,14 +29,15 @@ public class Controller {
 
     @Value("${login.success.message}")
     String loginSuccessMessage;
-//    @Autowired
-//    private ProductService service;
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     ListingRepository listingRepository;
+
+    @Autowired
+    StatusRepository statusRepository;
 
     //Creating a New User Getting and Posting
 
@@ -71,13 +77,6 @@ public class Controller {
         return "redirect:/index";
     }
 
-
-    //    @GetMapping("/login")
-//    public String showSignUpForm(User user) {
-//        return "login";
-//    }
-
-
     // Logging in Screen
     @GetMapping("/newlogin")
     public String showSignInForm(Model model) {
@@ -112,8 +111,11 @@ public class Controller {
     //We will limit the view of the list using HTML CSS don't worry
     @GetMapping("/student_home")
     public String student_home(Model model, @ModelAttribute("user") User user) {
+        System.out.println("Fuck!");
         model.addAttribute("user", userRepository.findById(user.getId()));
         model.addAttribute("listings",listingRepository.findAll());
+        System.out.println(listingRepository.findAll());
+        System.out.println(user);
         return "student_home";
     }
 
@@ -144,6 +146,16 @@ public class Controller {
             return "student_profile";
         }
     }
+
+//    @RequestMapping(value = "/request_student")
+//    @GetMapping("/request_student")
+//    public String requestStudent(Model model ) {
+////        model.addAttribute("user", user);
+////        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
+////        model.addAttribute("statuses", statuses);
+//        System.out.println(selectedItem);
+//        return "test";
+//    }
 
 
 //    @GetMapping("/edit/{id}")
