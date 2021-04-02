@@ -6,24 +6,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.thymeleaf.spring5.expression.Mvc;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RegistrationTests {
+
+    @Value("${registration.failed.message}")
+    String registrationFailedMessage;
+
+    @Value("${registration.success.message}")
+    String registrationSuccessMessage;
 
     @Autowired
     private UserRepository userRepository;
@@ -36,20 +42,36 @@ public class RegistrationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+
     @BeforeEach
     void prepareDB(){
         user = new User();
         user.setPassword("asdf");
-        user.setPassword2("asdf");
         user.setName("registrationPerson");
         user.setEmail("registrationtest@test.com");
         user.setPhone("12345678");
         user.setType("Student");
         user.setDescription("Looking for a place to stay");
         user.setNationality("American");
-        User dbUser = userRepository.findByEmail(user.getEmail());
-        if(dbUser != null)
+
+
+        List<User> dbUsers = userRepository.findByName(user.getName());
+        if(dbUsers != null)
+            for (User dbUser: dbUsers
+                 ) {
             userRepository.delete(dbUser);
+            }
+
+        requestParams.add("name", user.getName());
+        requestParams.add("password", user.getPassword());
+        requestParams.add("password2", user.getPassword());
+        requestParams.add("email", user.getEmail());
+        requestParams.add("phone", user.getPhone());
+        requestParams.add("type", user.getType());
+        requestParams.add("description", user.getDescription());
+        requestParams.add("nationality", user.getNationality());
+
     }
 
     @Test
@@ -62,27 +84,21 @@ public class RegistrationTests {
     void registeringUserAddsThemToDatabase() throws Exception{
 
         mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("phone", user.getPhone())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
-         assertTrue(userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()));
+        assertEquals(user.getEmail(), userRepository.findByEmail(user.getEmail()).getEmail());
     }
 
     @Test
     void registeringUserWithWrongPasswordDoesNotAddThemToDatabase() throws Exception{
+        //replace retyped password with incorrect value
+        requestParams.remove("password2");
+        requestParams.add("password2", "not the password");
 
         mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", "not the password")
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -90,40 +106,30 @@ public class RegistrationTests {
     }
 
     @Test
-    void registeringUserBringsToProfilePage() throws Exception{
+    void registeringUserBringsToPageWithRegistrationSuccessMessage() throws Exception{
 
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("phone", user.getPhone())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
-        assertThat(content).contains("Profile");
+        assertThat(content).contains(registrationSuccessMessage);
     }
 
     @Test
     void passwordsMustMatchToRegisterUser()throws Exception{
-
+        requestParams.remove("password2");
+        requestParams.add("password2", "not the password");
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", "not the password")
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
-        assertThat(content).contains("<form action=\"/register\"");
+        assertThat(content).contains(registrationFailedMessage);
     }
 
     @Test
@@ -135,12 +141,9 @@ public class RegistrationTests {
 
             userRepository.delete(person);
             }
-
+        requestParams.remove("email");
         mockMvc.perform(post("/register", 42L)
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -149,68 +152,70 @@ public class RegistrationTests {
     }
 
     @Test
-    void missingEmailReturnsUserToRegistrationPage()throws Exception{
-
+    void missingEmailReturnsUserToRegistrationPageWithRegistrationFailedMessage()throws Exception{
+        requestParams.remove("email");
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
     }
-
-//    @Test
-//    void missingStudentOrHostTypeDoesNotAddUserToDB() throws Exception{
-//
-//        MvcResult result = mockMvc.perform(post("/register", 42L)
-//                .param("email", user.getEmail())
-//                .param("password", user.getPassword())
-//                .param("password2", user.getPassword2())
-//                .param("name", user.getName())
-//                .param("type",user.getType())
-//                .content(objectMapper.writeValueAsString(user)))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//
-//    }
 
     @Test
     void missingStudentOrHostTypeSendsUserBackToRegistrationPage() throws Exception{
 
+        //remove the parameter (missing type)
+        requestParams.remove("type");
+
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type","wrong value")
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
 
+        //add the type parameter but with and incorrect value
+        requestParams.add("type","wrong value");
+
         result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-//                .param("type","") missing type param
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
 
         content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
 
     }
+
+    @Test
+    void registeringMustHaveUniqueEmail() throws Exception{
+        //Arrange make sure a user is in the repository with email we are about to use
+        userRepository.insert(user);
+
+        //act try to register a new user with same email
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .params(requestParams)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        //assert The registration fails
+        assertThat(content).contains(registrationFailedMessage);
+
+
+
+
+    }
+
 }

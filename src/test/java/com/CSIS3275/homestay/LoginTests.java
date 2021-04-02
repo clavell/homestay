@@ -36,6 +36,9 @@ public class LoginTests {
     @Value("${login.failed.message}")
     String loginFailedMessage;
 
+    @Value("${login.success.message}")
+    String loginSuccessMessage;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -70,7 +73,7 @@ public class LoginTests {
     }
 
     @Test
-    void LoginWorks() throws Exception {
+    void LoginWorksAndShowsLoginSuccesMessage() throws Exception {
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
                 .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
@@ -78,7 +81,7 @@ public class LoginTests {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
 
-        assertThat(content).contains("Student Home");
+        assertThat(content).contains(loginSuccessMessage);
 
     }
 
@@ -115,7 +118,7 @@ public class LoginTests {
     }
 
     @Test
-    void ifFieldMissingLoginStillWorks() throws Exception {
+    void ifFieldMissingLoginStillWorksAndShowsLoginMessage() throws Exception {
         MvcResult result = mockMvc.perform(get("/logging_in", 42L)
 //                .contentType("application/json")
                 .params(requestParams)
@@ -126,7 +129,7 @@ public class LoginTests {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
 //just make sure that the page loads
-        assertThat(content).contains("Student Home");
+        assertThat(content).contains(loginSuccessMessage);
 
     }
 

@@ -9,6 +9,7 @@
     <title>Student Home</title>
 </head>
 <body>
+<p th:if="${message != null}" hidden th:text="${message}"></p>
 <h1>Listings Available</h1>
 <table>
     <tr th:each="listing: ${listings}">
