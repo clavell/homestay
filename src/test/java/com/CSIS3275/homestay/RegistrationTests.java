@@ -196,4 +196,26 @@ public class RegistrationTests {
 
     }
 
+    @Test
+    void registeringMustHaveUniqueEmail() throws Exception{
+        //Arrange make sure a user is in the repository with email we are about to use
+        userRepository.insert(user);
+
+        //act try to register a new user with same email
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .params(requestParams)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        //assert The registration fails
+        assertThat(content).contains(registrationFailedMessage);
+
+
+
+
+    }
+
 }
