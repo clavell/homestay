@@ -31,5 +31,6 @@ public class User {
     String type;
     String phone;
 
-    String jeez;
+    String removing;
+
 }
