@@ -12,14 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
-import org.thymeleaf.spring5.expression.Mvc;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,7 +84,7 @@ public class RegistrationTests {
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
-         assertTrue(userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()));
+        assertEquals(user.getEmail(), userRepository.findByEmail(user.getEmail()).getEmail());
     }
 
     @Test
@@ -162,22 +160,6 @@ public class RegistrationTests {
         assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
     }
-
-//    @Test
-//    void missingStudentOrHostTypeDoesNotAddUserToDB() throws Exception{
-//
-//        MvcResult result = mockMvc.perform(post("/register", 42L)
-//                .param("email", user.getEmail())
-//                .param("password", user.getPassword())
-//                .param("password2", user.getPassword2())
-//                .param("name", user.getName())
-//                .param("type",user.getType())
-//                .content(objectMapper.writeValueAsString(user)))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//
-//    }
 
     @Test
     void missingStudentOrHostTypeSendsUserBackToRegistrationPage() throws Exception{
