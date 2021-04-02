@@ -18,6 +18,12 @@ public class Controller {
 
     @Value("${registration.failed.message}")
     String registrationFailedMessage;
+
+    @Value("${registration.success.message}")
+    String registrationSuccessMessage;
+
+    @Value("${login.success.message}")
+    String loginSuccessMessage;
 //    @Autowired
 //    private ProductService service;
 
@@ -41,8 +47,10 @@ public class Controller {
         String email = user.getEmail();
         if (user.getPassword2().equals(user.getPassword()) && email != null && (user.getType() == "Admin" || user.getType() == "Student")) {
             userRepository.insert(user);
-            return "test";
+            model.addAttribute("message",registrationSuccessMessage);
+            return "newlogin";
         }
+        model.addAttribute("message",registrationFailedMessage);
         return "register";
     }
 
@@ -67,7 +75,6 @@ public class Controller {
     @GetMapping("/newlogin")
     public String showSignInForm(Model model) {
         model.addAttribute("user", new User());
-//        model.addAttribute("message",null);
         return "newlogin";
     }
 

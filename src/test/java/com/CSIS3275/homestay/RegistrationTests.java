@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +27,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class RegistrationTests {
 
+    @Value("${login.failed.message}")
+    String loginFailedMessage;
+
+    @Value("${registration.failed.message}")
+    String registrationFailedMessage;
+
+    @Value("${registration.success.message}")
+    String registrationSuccessMessage;
+
+    @Value("${login.success.message}")
+    String loginSuccessMessage;
     @Autowired
     private UserRepository userRepository;
 
@@ -97,7 +109,7 @@ public class RegistrationTests {
     }
 
     @Test
-    void registeringUserBringsToProfilePage() throws Exception{
+    void registeringUserBringsToPageWithRegistrationSuccessMessage() throws Exception{
 
         MvcResult result = mockMvc.perform(post("/register", 42L)
                 .params(requestParams)
@@ -106,8 +118,7 @@ public class RegistrationTests {
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
-        assertThat(content).contains("Profile");
+        assertThat(content).contains(registrationSuccessMessage);
     }
 
     @Test
@@ -121,8 +132,7 @@ public class RegistrationTests {
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
-        assertThat(content).contains("<form action=\"/register\"");
+        assertThat(content).contains(registrationFailedMessage);
     }
 
     @Test
@@ -145,7 +155,7 @@ public class RegistrationTests {
     }
 
     @Test
-    void missingEmailReturnsUserToRegistrationPage()throws Exception{
+    void missingEmailReturnsUserToRegistrationPageWithRegistrationFailedMessage()throws Exception{
         requestParams.remove("email");
         MvcResult result = mockMvc.perform(post("/register", 42L)
                 .params(requestParams)
@@ -154,7 +164,7 @@ public class RegistrationTests {
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
     }
 
@@ -187,7 +197,7 @@ public class RegistrationTests {
                 .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
 
         //add the type parameter but with and incorrect value
@@ -200,8 +210,9 @@ public class RegistrationTests {
                 .andReturn();
 
         content = result.getResponse().getContentAsString();
-        assertThat(content).contains("registrationPerson");
+        assertThat(content).contains(registrationFailedMessage);
         assertThat(content).contains("<form action=\"/register\"");
 
     }
+
 }
