@@ -45,7 +45,7 @@
     <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
 
     <label for="password2">Re-type Password</label>
-    <input type="password" th:field="*{password2}" id="password2" placeholder="Re-type Password"><br><br>
+    <input type="password" th:field="${password2}" id="password2" placeholder="Re-type Password"><br><br>
     <!--    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>-->
 
     <!--    Only available to User -->

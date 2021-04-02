@@ -38,11 +38,12 @@ public class Controller {
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("password2", new String());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @ModelAttribute("user") User user, @RequestParam String password2) {
+    public String registerUser(Model model, @ModelAttribute("user") User user, @ModelAttribute("password2") String password2) {
         //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
         String email = user.getEmail();
         if (password2.equals(user.getPassword()) && email != null && (user.getType() == "Admin" || user.getType() == "Student")) {

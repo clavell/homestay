@@ -48,7 +48,6 @@ public class RegistrationTests {
     void prepareDB(){
         user = new User();
         user.setPassword("asdf");
-        user.setPassword2("asdf");
         user.setName("registrationPerson");
         user.setEmail("registrationtest@test.com");
         user.setPhone("12345678");
@@ -61,7 +60,7 @@ public class RegistrationTests {
 
         requestParams.add("name", user.getName());
         requestParams.add("password", user.getPassword());
-        requestParams.add("password2", user.getPassword2());
+        requestParams.add("password2", user.getPassword());
         requestParams.add("email", user.getEmail());
         requestParams.add("phone", user.getPhone());
         requestParams.add("type", user.getType());
