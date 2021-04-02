@@ -24,5 +24,5 @@ public class Listings {
     String price;
     String room_description;
     String start_from;
-    String user_email_id;
+    String adminEmailId;
 }

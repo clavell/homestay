@@ -20,7 +20,8 @@ public class Status {
     String id;
 
     String status;
-    String user_admin_id;
-    String user_student_id;
-
+    String adminId;
+    String adminEmail;
+    String studentId;
+    String studentEmail;
 }

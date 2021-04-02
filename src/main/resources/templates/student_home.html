@@ -53,6 +53,17 @@
     <input type="submit" value="Edit/Customize Profile">
 </form>
 
+<form th:action="@{/requestStudent}" th:object="${user}" method="get">
+    <input type="hidden" th:field="*{id}"></input>
+    <input type="hidden" th:field="*{name}"></input>
+    <input type="hidden" th:field="*{email}"></input>
+    <input type="hidden" th:field="*{password}"></input>
+    <input type="hidden" th:field="*{description}"></input>
+    <input type="hidden" th:field="*{nationality}"></input>
+    <input type="hidden" th:field="*{phone}"></input>
+    <input type="submit" value="Check Request Status">
+</form>
+
 <h2><a href="request_history.html">Check Request Status</a></h2>
 </body>
 </html>
