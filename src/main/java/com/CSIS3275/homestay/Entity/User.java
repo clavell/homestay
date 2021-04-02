@@ -30,7 +30,4 @@ public class User {
     String nationality;
     String type;
     String phone;
-
-    String removing;
-
 }
