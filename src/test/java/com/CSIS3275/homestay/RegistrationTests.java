@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.util.LinkedMultiValueMap;
 import org.thymeleaf.spring5.expression.Mvc;
 
 import java.util.List;
@@ -36,6 +37,8 @@ public class RegistrationTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+
     @BeforeEach
     void prepareDB(){
         user = new User();
@@ -50,6 +53,16 @@ public class RegistrationTests {
         User dbUser = userRepository.findByEmail(user.getEmail());
         if(dbUser != null)
             userRepository.delete(dbUser);
+
+        requestParams.add("name", user.getName());
+        requestParams.add("password", user.getPassword());
+        requestParams.add("password2", user.getPassword2());
+        requestParams.add("email", user.getEmail());
+        requestParams.add("phone", user.getPhone());
+        requestParams.add("type", user.getType());
+        requestParams.add("description", user.getDescription());
+        requestParams.add("nationality", user.getNationality());
+
     }
 
     @Test
@@ -62,12 +75,7 @@ public class RegistrationTests {
     void registeringUserAddsThemToDatabase() throws Exception{
 
         mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("phone", user.getPhone())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -76,13 +84,12 @@ public class RegistrationTests {
 
     @Test
     void registeringUserWithWrongPasswordDoesNotAddThemToDatabase() throws Exception{
+        //replace retyped password with incorrect value
+        requestParams.remove("password2");
+        requestParams.add("password2", "not the password");
 
         mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", "not the password")
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -93,12 +100,7 @@ public class RegistrationTests {
     void registeringUserBringsToProfilePage() throws Exception{
 
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("phone", user.getPhone())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -110,13 +112,10 @@ public class RegistrationTests {
 
     @Test
     void passwordsMustMatchToRegisterUser()throws Exception{
-
+        requestParams.remove("password2");
+        requestParams.add("password2", "not the password");
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", "not the password")
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -135,12 +134,9 @@ public class RegistrationTests {
 
             userRepository.delete(person);
             }
-
+        requestParams.remove("email");
         mockMvc.perform(post("/register", 42L)
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
 
@@ -150,12 +146,9 @@ public class RegistrationTests {
 
     @Test
     void missingEmailReturnsUserToRegistrationPage()throws Exception{
-
+        requestParams.remove("email");
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type",user.getType())
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -184,12 +177,11 @@ public class RegistrationTests {
     @Test
     void missingStudentOrHostTypeSendsUserBackToRegistrationPage() throws Exception{
 
+        //remove the parameter (missing type)
+        requestParams.remove("type");
+
         MvcResult result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-                .param("type","wrong value")
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -198,12 +190,11 @@ public class RegistrationTests {
         assertThat(content).contains("registrationPerson");
         assertThat(content).contains("<form action=\"/register\"");
 
+        //add the type parameter but with and incorrect value
+        requestParams.add("type","wrong value");
+
         result = mockMvc.perform(post("/register", 42L)
-                .param("email", user.getEmail())
-                .param("password", user.getPassword())
-                .param("password2", user.getPassword2())
-                .param("name", user.getName())
-//                .param("type","") missing type param
+                .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andReturn();
