@@ -85,6 +85,8 @@ public class Controller {
         if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
+            model.addAttribute("message", loginSuccessMessage);
+
             if (userFromDB.getType().equals("Student")) {
                 System.out.println(userFromDB);
                 return "student_home";
