@@ -25,10 +25,21 @@
                     Price (In CAD $) - <p th:text="${listing.price}" ></p>
                     Description - <p th:text="${listing.room_description}" ></p>
                     Available From - <p th:text="${listing.start_from}" ></p>
-                    <form th:action="@{/student_home}" th:object="${listing}" method="get">
-                        <input type="hidden" th:field="*{address}">
-                        <input type="submit" value="Request">
-                    </form>
+
+<!--                    <form class="store-form" th:action="@{/request_student}">-->
+<!--                        <input th:name="idStorePk" th:value="${store.idStorePk}"/>-->
+<!--                        <input type="hidden" th:name="idStorePk" th:value="${listing.id}">-->
+<!--                        <button class="submit-button" type="submit">Request</button>-->
+<!--                    </form>-->
+
+<!--                    <form th:action="@{/request_student}" th:object="${listings}" method="get">-->
+<!--                        <input type="hidden" th:field="*{id}">-->
+<!--                        <input type="hidden" th:field="*{email}">-->
+<!--                        <div th:object="${listing}">-->
+<!--                            <input type="hidden" th:field="*{id}">-->
+<!--                        </div>-->
+<!--                        <input type="submit" value="Request">-->
+<!--                    </form>-->
                 </div>
             </div>
         </div>

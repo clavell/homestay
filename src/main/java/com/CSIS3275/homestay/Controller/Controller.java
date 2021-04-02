@@ -1,5 +1,6 @@
 package com.CSIS3275.homestay.Controller;
 
+import com.CSIS3275.homestay.Entity.Listings;
 import com.CSIS3275.homestay.Entity.Status;
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.ListingRepository;
@@ -93,8 +94,11 @@ public class Controller {
     //We will limit the view of the list using HTML CSS don't worry
     @GetMapping("/student_home")
     public String student_home(Model model, @ModelAttribute("user") User user) {
+        System.out.println("Fuck!");
         model.addAttribute("user", userRepository.findById(user.getId()));
         model.addAttribute("listings",listingRepository.findAll());
+        System.out.println(listingRepository.findAll());
+        System.out.println(user);
         return "student_home";
     }
 
@@ -126,13 +130,15 @@ public class Controller {
         }
     }
 
-    @GetMapping("/request_student")
-    public String requestStudent(Model model, @ModelAttribute("user") User user) {
-        model.addAttribute("user", user);
-        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
-        model.addAttribute("statuses", statuses);
-        return "request_student";
-    }
+//    @RequestMapping(value = "/request_student")
+//    @GetMapping("/request_student")
+//    public String requestStudent(Model model ) {
+////        model.addAttribute("user", user);
+////        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
+////        model.addAttribute("statuses", statuses);
+//        System.out.println(selectedItem);
+//        return "test";
+//    }
 
 
 //    @GetMapping("/edit/{id}")
