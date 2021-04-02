@@ -106,7 +106,24 @@ public class RegistrationTests {
     }
 
     @Test
-    void registeringUserBringsToPageWithRegistrationSuccessMessage() throws Exception{
+    void registeringUserBringsToPageWithRegistrationSuccessMessageForStudent() throws Exception{
+    //test for student
+        MvcResult result = mockMvc.perform(post("/register", 42L)
+                .params(requestParams)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains(registrationSuccessMessage);
+
+    }
+
+    @Test
+    void registeringUserBringsToPageWithRegistrationSuccessMessageForAdmin() throws Exception{
+        //test for admin
+        requestParams.remove("type");
+        requestParams.add("type","Admin");
 
         MvcResult result = mockMvc.perform(post("/register", 42L)
                 .params(requestParams)
@@ -212,10 +229,6 @@ public class RegistrationTests {
 
         //assert The registration fails
         assertThat(content).contains(registrationFailedMessage);
-
-
-
-
     }
 
 }
