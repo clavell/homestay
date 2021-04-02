@@ -30,7 +30,6 @@ public class User {
     String nationality;
     String type;
     String phone;
-    String dummy_sarb;
 
 
 }
