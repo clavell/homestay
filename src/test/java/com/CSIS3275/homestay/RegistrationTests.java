@@ -54,9 +54,14 @@ public class RegistrationTests {
         user.setType("Student");
         user.setDescription("Looking for a place to stay");
         user.setNationality("American");
-        User dbUser = userRepository.findByEmail(user.getEmail());
-        if(dbUser != null)
+
+
+        List<User> dbUsers = userRepository.findByName(user.getName());
+        if(dbUsers != null)
+            for (User dbUser: dbUsers
+                 ) {
             userRepository.delete(dbUser);
+            }
 
         requestParams.add("name", user.getName());
         requestParams.add("password", user.getPassword());
