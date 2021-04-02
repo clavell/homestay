@@ -27,17 +27,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class RegistrationTests {
 
-    @Value("${login.failed.message}")
-    String loginFailedMessage;
-
     @Value("${registration.failed.message}")
     String registrationFailedMessage;
 
     @Value("${registration.success.message}")
     String registrationSuccessMessage;
 
-    @Value("${login.success.message}")
-    String loginSuccessMessage;
     @Autowired
     private UserRepository userRepository;
 
