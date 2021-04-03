@@ -91,6 +91,7 @@ public class Controller {
         if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
+            model.addAttribute("listings",listingRepository.findAll());
             model.addAttribute("message", loginSuccessMessage);
 
             if (userFromDB.getType().equals("Student")) {
@@ -147,15 +148,15 @@ public class Controller {
         }
     }
 
-//    @RequestMapping(value = "/request_student")
-//    @GetMapping("/request_student")
-//    public String requestStudent(Model model ) {
-////        model.addAttribute("user", user);
-////        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
-////        model.addAttribute("statuses", statuses);
-//        System.out.println(selectedItem);
-//        return "test";
-//    }
+    @GetMapping("/request_student")
+    public String requestStudent(Model model, @ModelAttribute("user") User user , @ModelAttribute("list") Listings listing) {
+//        model.addAttribute("user", user);
+//        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
+//        model.addAttribute("statuses", statuses);
+        System.out.println(user);
+        System.out.println(listing);
+        return "test";
+    }
 
 
 //    @GetMapping("/edit/{id}")
