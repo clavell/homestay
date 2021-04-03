@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @org.springframework.stereotype.Controller
 public class Controller {
+
+    private User user;
 
     @Value("${login.failed.message}")
     String loginFailedMessage;
@@ -84,7 +87,7 @@ public class Controller {
     // Logging in Screen
     @GetMapping("/newlogin")
     public String showSignInForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("toLogin", new User());
         return "newlogin";
     }
 
@@ -133,7 +136,9 @@ public class Controller {
     //Whenever he/she posts an update for there details an update is called (aka post mapping)
     @PostMapping("/student_profile")
     public String student_profile_update(Model model, @ModelAttribute("user") User user) {
-        User userFromDB = userRepository.findByEmail(user.getEmail());
+        User userFromDB = userRepository.findById(user.getId()).get();
+
+
         if (user.getPassword().equals(userFromDB.getPassword())) {
             userFromDB.setName(user.getName());
             userFromDB.setEmail(user.getEmail());

@@ -63,7 +63,9 @@ public class ProfileTests {
             }
 
         userRepository.insert(user);
+        user = userRepository.findByEmail(user.getEmail());
 
+        requestParams.add("id",user.getId());
         requestParams.add("name", user.getName());
         requestParams.add("password", user.getPassword());
         requestParams.add("email", user.getEmail());
@@ -94,5 +96,29 @@ public class ProfileTests {
         assertTrue(user.getPhone() == new_phone);
 
     }
+
+    @Test
+    void updatingProfileForUserWithIncorrectPWDoesNotUpdateTheUserInTheModel() throws Exception{
+        requestParams.remove("phone");
+        String new_phone = "91827398217398127";
+        requestParams.add("phone", new_phone);
+
+        requestParams.remove("password");
+        requestParams.add("password","23432");
+
+        //test for student
+        MvcResult result = mockMvc.perform(post("/student_profile", 42L)
+                .params(requestParams)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("user"))
+                .andReturn();
+
+        User user = (User) result.getModelAndView().getModel().get("user");
+
+        assertTrue(user.getPhone() == user.getPhone());
+
+    }
+
 
 }
