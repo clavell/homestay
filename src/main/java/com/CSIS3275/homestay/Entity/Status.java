@@ -21,6 +21,7 @@ public class Status {
 
     String status;
     String listingId;
+    String listingAddress;
     String adminId;
     String adminEmail;
     String studentId;

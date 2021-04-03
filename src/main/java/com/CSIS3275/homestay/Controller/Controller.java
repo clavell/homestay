@@ -112,8 +112,7 @@ public class Controller {
     //We will limit the view of the list using HTML CSS don't worry
     @GetMapping("/student_home")
     public String student_home(Model model, @ModelAttribute("user") User user) {
-        System.out.println("Fuck!");
-        model.addAttribute("user", userRepository.findById(user.getId()));
+        model.addAttribute("user", userRepository.findByEmail(user.getEmail()));
         model.addAttribute("listings",listingRepository.findAll());
         System.out.println(listingRepository.findAll());
         System.out.println(user);
@@ -161,6 +160,7 @@ public class Controller {
         s.setStudentEmail(student.getEmail());
         s.setStudentId(student.getId());
         s.setListingId(listingid);
+        s.setListingAddress(listings.getAddress());
         s.setStatus("To Be Decided");
         if(statusRepository.StudentEmailAndListingId(student.getEmail(),listingid) == null) {
             statusRepository.insert(s);
@@ -169,9 +169,9 @@ public class Controller {
         else{
             System.out.println("Status Already Exists");
         }
-        model.addAttribute("user",student);
-        model.addAttribute("status", statusRepository.findByStudentEmail(student.getEmail()));
-        return "test";
+        model.addAttribute("user", student);
+        model.addAttribute("status", statusRepository.StudentEmail(student.getEmail()));
+        return "request_student";
     }
 
 

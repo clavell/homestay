@@ -28,19 +28,14 @@
                     Price (In CAD $) - <p th:text="${listing.price}" ></p>
                     Description - <p th:text="${listing.room_description}" ></p>
                     Available From - <p th:text="${listing.start_from}" ></p>
-                    <a th:href="@{request_student/(listingid=${listing.id},userid=${user.id})}"> request </a>
+                    <a th:href="@{request_student/(listingid=${listing.id},userid=${user.id})}"> Request </a>
                 </div>
             </div>
         </div>
 
     </tr>
 </table>
-<script>
-    function tatti() {
-        var id =  document.getElementById("list").innerHTML;
-        document.getElementById("lostingid").innerHTML = id;
-    }
-</script>
+
 <form th:action="@{/student_profile}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}"></input>
     <input type="hidden" th:field="*{name}"></input>
