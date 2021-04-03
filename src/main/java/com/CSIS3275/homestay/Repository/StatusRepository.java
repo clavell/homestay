@@ -12,4 +12,6 @@ public interface StatusRepository extends MongoRepository<Status, String> {
     Status StudentEmailAndListingId(String studentEmail, String listingid);
 
     List<Status> StudentEmail(String email);
+
+    List<Status> AdminEmailAndListingId(String email, String listingid);
 }

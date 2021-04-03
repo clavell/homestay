@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -203,6 +205,17 @@ public class Controller {
         model.addAttribute("listing", listingsFromDB);
         model.addAttribute("user",userRepository.findByEmail(listing.getAdminEmailId()));
         return "edit_listing_admin";
+    }
+
+    @GetMapping("/request_status")
+    public String requestStatus(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
+        Listings listings = listingRepository.findById(listingid).orElse(null);
+        User admin = userRepository.findById(userid).orElse(null);
+        List<Status> status = statusRepository.AdminEmailAndListingId(admin.getEmail(), listingid);
+        model.addAttribute("user",admin);
+        model.addAttribute("listing", listings);
+        model.addAttribute("status",status);
+        return "request_admin";
     }
 
 //    @GetMapping("/edit/{id}")
