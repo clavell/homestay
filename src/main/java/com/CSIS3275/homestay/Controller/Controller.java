@@ -211,11 +211,14 @@ public class Controller {
     public String requestStatus(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
         Listings listings = listingRepository.findById(listingid).orElse(null);
         User admin = userRepository.findById(userid).orElse(null);
-        List<Status> status = statusRepository.AdminEmailAndListingId(admin.getEmail(), listingid);
+        List<Status> statuses = statusRepository.AdminEmailAndListingId(admin.getEmail(), listingid);
         model.addAttribute("user",admin);
         model.addAttribute("listing", listings);
-        model.addAttribute("status",status);
-        return "request_admin";
+        model.addAttribute("statuses",statuses);
+        System.out.println(listings);
+        System.out.println(admin);
+        System.out.println(statuses);
+        return "requests_admin";
     }
 
 //    @GetMapping("/edit/{id}")

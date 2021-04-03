@@ -5,28 +5,56 @@
     <title>Requests</title>
 </head>
 <body>
-<h1>Request Status</h1>
-<h2> <span th:text="${user.name}"></span>'s Request History</h2>
+<h1>Request History</h1>
+<h2><span th:text="${listing.address}"></span> Request History</h2>
 <table>
-    <tr th:each="request: ${status}">
+    <tr th:each="request: ${statuses}">
+        <form action="#"
+              th:action="@{/request_admin}"
+              th:object="${request}"
+              method="post">
 
-        <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-             alt="Avatar" style="width:20%">
+            <!--String status;
+                String listingId;
+                String listingAddress;
+                String adminId;
+                String adminEmail;
+                String studentId;
+                String studentEmail;
+               -->
 
-        <h4><b>Status Check</b></h4>
-        Status - <p th:text="${request.status}"></p>
-        Address - <p th:text="${request.listingAddress}"></p>
-        Please Contact the Family at - <p th:text="${request.adminEmail}"></p>
+            <label for="status">status</label>
+            <input type="text" th:field="*{status}" id="status"
+                   placeholder="status"><br><br>
+            <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+
+            <label for="studentEmail">studentEmail</label>
+            <input type="text" th:field="*{studentEmail}" id="studentEmail"
+                   placeholder="studentEmail"><br><br>
+            <span th:if="${#fields.hasErrors('studentEmail')}" th:errors="*{studentEmail}" aria-readonly="true"></span>
+
+            <label for="studentId">studentId</label>
+            <input type="text" th:field="*{studentId}" id="studentId"
+                   placeholder="studentId"><br><br>
+            <span th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}" aria-readonly="true"></span>
+
+            <input type="hidden" th:field="*{id}">
+            <!--    <input type="hidden" id="userid" th:field="${user.id}" >-->
+
+            <input type="submit" value="Update Request">
+
+        </form>
     </tr>
+
 </table>
-<form th:action="@{/student_home}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}"></input>
-    <input type="hidden" th:field="*{name}"></input>
-    <input type="hidden" th:field="*{email}"></input>
-    <input type="hidden" th:field="*{password}"></input>
-    <input type="hidden" th:field="*{description}"></input>
-    <input type="hidden" th:field="*{nationality}"></input>
-    <input type="hidden" th:field="*{phone}"></input>
+<form th:action="@{/admin_home}" th:object="${user}" method="get">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{name}">
+    <input type="hidden" th:field="*{email}">
+    <input type="hidden" th:field="*{password}">
+    <input type="hidden" th:field="*{description}">
+    <input type="hidden" th:field="*{nationality}">
+    <input type="hidden" th:field="*{phone}">
     <input type="submit" value="Go Back to Listings">
 </form>
 
