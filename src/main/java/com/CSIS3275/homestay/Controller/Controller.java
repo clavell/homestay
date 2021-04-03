@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @org.springframework.stereotype.Controller
@@ -61,10 +61,10 @@ public class Controller {
 
         if (canRegister) {
             userRepository.insert(user);
-            model.addAttribute("message",registrationSuccessMessage);
+            model.addAttribute("message", registrationSuccessMessage);
             return "newlogin";
         }
-        model.addAttribute("message",registrationFailedMessage);
+        model.addAttribute("message", registrationFailedMessage);
         return "register";
     }
 
@@ -94,10 +94,10 @@ public class Controller {
             model.addAttribute("user", userFromDB);
             model.addAttribute("message", loginSuccessMessage);
             if (userFromDB.getType().equals("Student")) {
-                model.addAttribute("listings",listingRepository.findAll());
+                model.addAttribute("listings", listingRepository.findAll());
                 return "student_home";
             } else if (userFromDB.getType().equals("Admin")) {
-                model.addAttribute("listings",listingRepository.AdminEmailId(userFromDB.getEmail()));
+                model.addAttribute("listings", listingRepository.AdminEmailId(userFromDB.getEmail()));
                 return "admin_home";
             }
         }
@@ -113,7 +113,7 @@ public class Controller {
     @GetMapping("/student_home")
     public String student_home(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()));
-        model.addAttribute("listings",listingRepository.findAll());
+        model.addAttribute("listings", listingRepository.findAll());
         System.out.println(listingRepository.findAll());
         System.out.println(user);
         return "student_home";
@@ -140,18 +140,17 @@ public class Controller {
             userRepository.insert(userFromDB);
             model.addAttribute("user", userFromDB);
             return "student_profile";
-        }
-        else{
-            model.addAttribute("user",userFromDB);
+        } else {
+            model.addAttribute("user", userFromDB);
             return "student_profile";
         }
     }
 
     @GetMapping("/request_student")
-    public String requestStudent(Model model,@RequestParam(required = false) String listingid , @RequestParam String userid) {
+    public String requestStudent(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
         User student = userRepository.findById(userid).orElse(null);
         Listings listings = listingRepository.findById(listingid).orElse(null);
-        if(listings != null) {
+        if (listings != null) {
             User admin = userRepository.findByEmail(listings.getAdminEmailId());
             Status s = new Status();
             s.setAdminEmail(admin.getEmail());
@@ -176,21 +175,32 @@ public class Controller {
     @GetMapping("/admin_home")
     public String admin_home(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()));
-        model.addAttribute("listings",listingRepository.AdminEmailId(user.getEmail()));
-        System.out.println(listingRepository.findAll());
-        System.out.println(user);
+        model.addAttribute("listings", listingRepository.AdminEmailId(user.getEmail()));
         return "student_home";
     }
 
 
     @GetMapping("/edit_listing")
-    public String editListing(Model model,@RequestParam(required = false) String listingid , @RequestParam String userid) {
-        User admin = userRepository.findById(userid).orElse(null);
+    public String editListing(Model model, @RequestParam(required = false) String listingid) {
         Listings listings = listingRepository.findById(listingid).orElse(null);
 
-        model.addAttribute("user", admin);
-        model.addAttribute("listing",listings);
-        return "request_student";
+        model.addAttribute("listing", listings);
+        return "edit_listing_admin";
+    }
+
+    @PostMapping("/edit_listing")
+    public String updateListing(Model model, @ModelAttribute("listing") Listings listing) {
+        Listings listingsFromDB = listingRepository.findById(listing.getId()).orElse(null);
+        listingsFromDB.setAddress(listing.getAddress());
+        listingsFromDB.setDuration(listing.getDuration());
+        listingsFromDB.setAdminEmailId(listingsFromDB.getAdminEmailId());
+        listingsFromDB.setStart_from(listing.getStart_from());
+        listingsFromDB.setPrice(listing.getPrice());
+        listingsFromDB.setRoom_description(listing.getRoom_description());
+        listingRepository.deleteById(listing.getId());
+        listingRepository.insert(listingsFromDB);
+        model.addAttribute("listing", listingsFromDB);
+        return "edit_listing_admin";
     }
 
 //    @GetMapping("/edit/{id}")
