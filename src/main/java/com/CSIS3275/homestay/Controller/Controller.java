@@ -133,14 +133,14 @@ public class Controller {
     //Whenever he/she posts an update for there details an update is called (aka post mapping)
     @PostMapping("/student_profile")
     public String student_profile_update(Model model, @ModelAttribute("user") User user) {
-        User userFromDB = userRepository.findById(user.getId()).orElse(userRepository.findByEmail(user.getEmail()));
+        User userFromDB = userRepository.findByEmail(user.getEmail());
         if (user.getPassword().equals(userFromDB.getPassword())) {
             userFromDB.setName(user.getName());
             userFromDB.setEmail(user.getEmail());
             userFromDB.setNationality(user.getNationality());
             userFromDB.setDescription(user.getDescription());
             userFromDB.setPhone(user.getPhone());
-            userRepository.deleteById(user.getId());
+            userRepository.deleteById(userFromDB.getId());
             userRepository.insert(userFromDB);
             model.addAttribute("user", userFromDB);
             return "student_profile";
