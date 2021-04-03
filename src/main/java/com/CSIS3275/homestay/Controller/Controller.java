@@ -149,8 +149,6 @@ public class Controller {
 
     @GetMapping("/request_student")
     public String requestStudent(Model model,@RequestParam(required = false) String listingid , @RequestParam String userid) {
-        System.out.println(listingid);
-        System.out.println(userid);
         User student = userRepository.findById(userid).orElse(null);
         Listings listings = listingRepository.findById(listingid).orElse(null);
         if(listings != null) {
@@ -175,6 +173,25 @@ public class Controller {
         return "request_student";
     }
 
+    @GetMapping("/admin_home")
+    public String admin_home(Model model, @ModelAttribute("user") User user) {
+        model.addAttribute("user", userRepository.findByEmail(user.getEmail()));
+        model.addAttribute("listings",listingRepository.AdminEmailId(user.getEmail()));
+        System.out.println(listingRepository.findAll());
+        System.out.println(user);
+        return "student_home";
+    }
+
+
+    @GetMapping("/edit_listing")
+    public String editListing(Model model,@RequestParam(required = false) String listingid , @RequestParam String userid) {
+        User admin = userRepository.findById(userid).orElse(null);
+        Listings listings = listingRepository.findById(listingid).orElse(null);
+
+        model.addAttribute("user", admin);
+        model.addAttribute("listing",listings);
+        return "request_student";
+    }
 
 //    @GetMapping("/edit/{id}")
 //    public String showUpdateForm(@PathVariable("id") String id, Model model) {
