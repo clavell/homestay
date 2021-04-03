@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ListingRepository extends MongoRepository<Listings, String> {
 
+    List<Listings> AdminEmailId(String email);
 }

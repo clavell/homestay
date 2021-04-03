@@ -92,13 +92,12 @@ public class Controller {
         if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
-            model.addAttribute("listings",listingRepository.findAll());
             model.addAttribute("message", loginSuccessMessage);
-
             if (userFromDB.getType().equals("Student")) {
-                System.out.println(userFromDB);
+                model.addAttribute("listings",listingRepository.findAll());
                 return "student_home";
             } else if (userFromDB.getType().equals("Admin")) {
+                model.addAttribute("listings",listingRepository.AdminEmailId(userFromDB.getEmail()));
                 return "admin_home";
             }
         }
