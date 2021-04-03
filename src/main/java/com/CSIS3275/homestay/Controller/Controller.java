@@ -176,20 +176,21 @@ public class Controller {
     public String admin_home(Model model, @ModelAttribute("user") User user) {
         model.addAttribute("user", userRepository.findByEmail(user.getEmail()));
         model.addAttribute("listings", listingRepository.AdminEmailId(user.getEmail()));
-        return "student_home";
+        return "admin_home";
     }
 
 
     @GetMapping("/edit_listing")
-    public String editListing(Model model, @RequestParam(required = false) String listingid) {
+    public String editListing(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
         Listings listings = listingRepository.findById(listingid).orElse(null);
-
+        model.addAttribute("user",userRepository.findById(userid));
         model.addAttribute("listing", listings);
         return "edit_listing_admin";
     }
 
     @PostMapping("/edit_listing")
     public String updateListing(Model model, @ModelAttribute("listing") Listings listing) {
+        System.out.println(listing);
         Listings listingsFromDB = listingRepository.findById(listing.getId()).orElse(null);
         listingsFromDB.setAddress(listing.getAddress());
         listingsFromDB.setDuration(listing.getDuration());
@@ -200,6 +201,7 @@ public class Controller {
         listingRepository.deleteById(listing.getId());
         listingRepository.insert(listingsFromDB);
         model.addAttribute("listing", listingsFromDB);
+        model.addAttribute("user",userRepository.findByEmail(listing.getAdminEmailId()));
         return "edit_listing_admin";
     }
 
