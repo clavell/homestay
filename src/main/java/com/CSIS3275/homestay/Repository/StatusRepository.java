@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface StatusRepository extends MongoRepository<Status, String> {
     List<Status> findByStudentEmail(String email);
+
+    Status StudentEmailAndListingId(String studentEmail, String listingid);
 }

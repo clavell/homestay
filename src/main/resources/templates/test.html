@@ -13,19 +13,19 @@
      alt="Avatar" style="width:50%">
 
 <form action="#"
-      th:action="@{/update/{email}(email=${user.email})}"
+      th:action="@{/update}"
       th:object="${user}"
       method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
+<!--    <label for="name">Name</label>-->
+<!--    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>-->
 <!--    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->
 
     <!--    <label for="nationality">Nationality</label>-->
     <!--    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>-->
     <!--    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>-->
 
-    <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
+<!--    <label for="email">Email</label>-->
+<!--    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>-->
 <!--    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
 
     <!--    <label for="phone">Phone</label>-->

@@ -21,20 +21,14 @@
                     <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
                          alt="Avatar" style="width:20%">
                 <div class="container">
-                    <form th:action="@{/request_student}" th:object="${list}" method="get">
                     <h4><b>Details</b></h4>
+                    Listing ID - <p id="list" th:text="${listing.id}" ></p>
                     Address - <p th:text="${listing.address}" ></p>
                     Duration(Months) - <p th:text="${listing.duration}" ></p>
                     Price (In CAD $) - <p th:text="${listing.price}" ></p>
                     Description - <p th:text="${listing.room_description}" ></p>
                     Available From - <p th:text="${listing.start_from}" ></p>
-
-                    <input type="hidden" id="list" th:value="${listing.id}" >
-                    <p id="lostingid" >hello</p>
-
-
-                    </form>
-                    <button onclick="tatti()"> MaKaBhosada</button>
+                    <a th:href="@{request_student/(listingid=${listing.id},userid=${user.id})}"> request </a>
                 </div>
             </div>
         </div>
@@ -43,7 +37,7 @@
 </table>
 <script>
     function tatti() {
-        var id =  document.getElementById("list").value;
+        var id =  document.getElementById("list").innerHTML;
         document.getElementById("lostingid").innerHTML = id;
     }
 </script>

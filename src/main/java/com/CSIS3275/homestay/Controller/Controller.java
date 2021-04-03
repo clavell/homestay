@@ -149,12 +149,28 @@ public class Controller {
     }
 
     @GetMapping("/request_student")
-    public String requestStudent(Model model, @ModelAttribute("user") User user , @ModelAttribute("list") Listings listing) {
-//        model.addAttribute("user", user);
-//        List<Status> statuses = statusRepository.findByStudentEmail(user.getEmail());
-//        model.addAttribute("statuses", statuses);
-        System.out.println(user);
-        System.out.println(listing);
+    public String requestStudent(Model model,@RequestParam String listingid , @RequestParam String userid) {
+        System.out.println(listingid);
+        System.out.println(userid);
+        User student = userRepository.findById(userid).orElse(null);
+        Listings listings = listingRepository.findById(listingid).orElse(null);
+        User admin = userRepository.findByEmail(listings.getAdminEmailId());
+        Status s = new Status();
+        s.setAdminEmail(admin.getEmail());
+        s.setAdminId(admin.getId());
+        s.setStudentEmail(student.getEmail());
+        s.setStudentId(student.getId());
+        s.setListingId(listingid);
+        s.setStatus("To Be Decided");
+        if(statusRepository.StudentEmailAndListingId(student.getEmail(),listingid) == null) {
+            statusRepository.insert(s);
+            System.out.println("Status Inserted");
+        }
+        else{
+            System.out.println("Status Already Exists");
+        }
+        model.addAttribute("user",student);
+        model.addAttribute("status", statusRepository.findByStudentEmail(student.getEmail()));
         return "test";
     }
 
