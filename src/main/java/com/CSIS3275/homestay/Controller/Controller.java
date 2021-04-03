@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+
 @org.springframework.stereotype.Controller
 public class Controller {
 
@@ -148,26 +149,27 @@ public class Controller {
     }
 
     @GetMapping("/request_student")
-    public String requestStudent(Model model,@RequestParam String listingid , @RequestParam String userid) {
+    public String requestStudent(Model model,@RequestParam(required = false) String listingid , @RequestParam String userid) {
         System.out.println(listingid);
         System.out.println(userid);
         User student = userRepository.findById(userid).orElse(null);
         Listings listings = listingRepository.findById(listingid).orElse(null);
-        User admin = userRepository.findByEmail(listings.getAdminEmailId());
-        Status s = new Status();
-        s.setAdminEmail(admin.getEmail());
-        s.setAdminId(admin.getId());
-        s.setStudentEmail(student.getEmail());
-        s.setStudentId(student.getId());
-        s.setListingId(listingid);
-        s.setListingAddress(listings.getAddress());
-        s.setStatus("To Be Decided");
-        if(statusRepository.StudentEmailAndListingId(student.getEmail(),listingid) == null) {
-            statusRepository.insert(s);
-            System.out.println("Status Inserted");
-        }
-        else{
-            System.out.println("Status Already Exists");
+        if(listings != null) {
+            User admin = userRepository.findByEmail(listings.getAdminEmailId());
+            Status s = new Status();
+            s.setAdminEmail(admin.getEmail());
+            s.setAdminId(admin.getId());
+            s.setStudentEmail(student.getEmail());
+            s.setStudentId(student.getId());
+            s.setListingId(listingid);
+            s.setListingAddress(listings.getAddress());
+            s.setStatus("To Be Decided");
+            if (statusRepository.StudentEmailAndListingId(student.getEmail(), listingid) == null) {
+                statusRepository.insert(s);
+                System.out.println("Status Inserted");
+            } else {
+                System.out.println("Status Already Exists");
+            }
         }
         model.addAttribute("user", student);
         model.addAttribute("status", statusRepository.StudentEmail(student.getEmail()));

@@ -22,7 +22,6 @@
                          alt="Avatar" style="width:20%">
                 <div class="container">
                     <h4><b>Details</b></h4>
-                    Listing ID - <p id="list" th:text="${listing.id}" ></p>
                     Address - <p th:text="${listing.address}" ></p>
                     Duration(Months) - <p th:text="${listing.duration}" ></p>
                     Price (In CAD $) - <p th:text="${listing.price}" ></p>
@@ -37,27 +36,17 @@
 </table>
 
 <form th:action="@{/student_profile}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}"></input>
-    <input type="hidden" th:field="*{name}"></input>
-    <input type="hidden" th:field="*{email}"></input>
-    <input type="hidden" th:field="*{password}"></input>
-    <input type="hidden" th:field="*{description}"></input>
-    <input type="hidden" th:field="*{nationality}"></input>
-    <input type="hidden" th:field="*{phone}"></input>
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{name}">
+    <input type="hidden" th:field="*{email}">
+    <input type="hidden" th:field="*{password}">
+    <input type="hidden" th:field="*{description}">
+    <input type="hidden" th:field="*{nationality}">
+    <input type="hidden" th:field="*{phone}">
     <input type="submit" value="Edit/Customize Profile">
 </form>
 
-<form th:action="@{/request_student}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}"></input>
-    <input type="hidden" th:field="*{name}"></input>
-    <input type="hidden" th:field="*{email}"></input>
-    <input type="hidden" th:field="*{password}"></input>
-    <input type="hidden" th:field="*{description}"></input>
-    <input type="hidden" th:field="*{nationality}"></input>
-    <input type="hidden" th:field="*{phone}"></input>
-    <input type="submit" value="Check Request Status">
-</form>
+<a th:href="@{request_student/(listingid='',userid=${user.id})}"> Check Request History </a>
 
-<h2><a href="request_history.html">Check Request Status</a></h2>
 </body>
 </html>
