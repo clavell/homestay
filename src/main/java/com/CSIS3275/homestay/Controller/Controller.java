@@ -46,24 +46,25 @@ public class Controller {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("toRegister", new User());
         model.addAttribute("password2", new String());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @ModelAttribute("user") User user, @ModelAttribute("password2") String password2) {
-        //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
-        String email = user.getEmail();
+    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister, @ModelAttribute("password2") String password2) {
+        //    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
+        String email = toRegister.getEmail();
         User existingUser = userRepository.findByEmail(email);
 
-        boolean canRegister = password2.equals(user.getPassword()) && email != null &&
-                (user.getType() == "Admin" || user.getType() == "Student") &&
+        boolean canRegister = password2.equals(toRegister.getPassword()) && email != null &&
+                (toRegister.getType() == "Admin" || toRegister.getType() == "Student") &&
                 existingUser == null;
 
         if (canRegister) {
-            userRepository.insert(user);
-            model.addAttribute("message", registrationSuccessMessage);
+            userRepository.insert(toRegister);
+            model.addAttribute("message",registrationSuccessMessage);
+            model.addAttribute("toLogin",toRegister);
             return "newlogin";
         }
         model.addAttribute("message", registrationFailedMessage);
@@ -88,10 +89,11 @@ public class Controller {
     }
 
     //Once the user has logged in the Get Mapping to decide which kind of user it is
+
     @GetMapping("/logging_in")
-    public String loggingIn(Model model, @ModelAttribute("user") User user) {
-        User userFromDB = userRepository.findByEmail(user.getEmail());
-        if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
+    public String loggingIn(Model model, @ModelAttribute("toLogin") User toLogin) {
+        User userFromDB = userRepository.findByEmail(toLogin.getEmail());
+        if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(toLogin.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
             model.addAttribute("message", loginSuccessMessage);
@@ -103,7 +105,7 @@ public class Controller {
                 return "admin_home";
             }
         }
-        //If the user doesn't exist it won't log in
+        //If the toLogin doesn't exist it won't log in
         model.addAttribute("message", loginFailedMessage);
         return "newlogin";
     }

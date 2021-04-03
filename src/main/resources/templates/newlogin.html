@@ -7,7 +7,7 @@
 </head>
 <body>
 <p th:if="${message != null}" th:text="${message}"></p>
-<form th:action="@{/logging_in}" th:object="${user}" method="get">
+<form th:action="@{/logging_in}" th:object="${toLogin}" method="get">
     <label for="email">Enter Email</label>
     <input type="text" id="email" th:field="*{email}" placeholder="abc@xyz.com"/><br><br>
     <label for="password">Enter Password</label>

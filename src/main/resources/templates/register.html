@@ -14,7 +14,7 @@
      alt="Avatar" style="width:50%">
 <form action="#"
       th:action="@{/register}"
-      th:object="${user}"
+      th:object="${toRegister}"
       method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
