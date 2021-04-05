@@ -182,6 +182,15 @@ public class Controller {
     }
 
 
+    @PostMapping("/add_listing")
+    public String addListing(Model model, @ModelAttribute("listing") Listings listing, @ModelAttribute("user") User user) {
+//        Listings listings = listingRepository.findById(listingid).orElse(null);
+        model.addAttribute("user",userRepository.findByEmail(user.getEmail()));
+        model.addAttribute("listing", listing);
+        listingRepository.insert(listing);
+        return "admin_home";
+    }
+
     @GetMapping("/edit_listing")
     public String editListing(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
         Listings listings = listingRepository.findById(listingid).orElse(null);
@@ -199,7 +208,7 @@ public class Controller {
         listingsFromDB.setAdminEmailId(listingsFromDB.getAdminEmailId());
         listingsFromDB.setStart_from(listing.getStart_from());
         listingsFromDB.setPrice(listing.getPrice());
-        listingsFromDB.setRoom_description(listing.getRoom_description());
+        listingsFromDB.setDescription(listing.getDescription());
         listingRepository.deleteById(listing.getId());
         listingRepository.insert(listingsFromDB);
         model.addAttribute("listing", listingsFromDB);

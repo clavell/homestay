@@ -25,7 +25,7 @@
                     Address - <p th:text="${listing.address}" ></p>
                     Duration(Months) - <p th:text="${listing.duration}" ></p>
                     Price (In CAD $) - <p th:text="${listing.price}" ></p>
-                    Description - <p th:text="${listing.room_description}" ></p>
+                    Description - <p th:text="${listing.description}" ></p>
                     Available From - <p th:text="${listing.start_from}" ></p>
                     <a th:href="@{edit_listing/(listingid=${listing.id},userid=${user.id})}"> Edit Listing </a>
                     <a th:href="@{request_status/(listingid=${listing.id},userid=${user.id})}"> Check Request Status </a>

@@ -22,7 +22,8 @@ public class Listings {
     String address;
     String duration;
     String price;
-    String room_description;
+    String description;
     String start_from;
+    //admin's user id. Not changing name to avoid breaks
     String adminEmailId;
 }
