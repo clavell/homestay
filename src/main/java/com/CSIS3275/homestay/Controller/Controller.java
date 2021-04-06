@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @org.springframework.stereotype.Controller
 public class Controller {
+
+    private User user;
 
     @Value("${login.failed.message}")
     String loginFailedMessage;
@@ -46,24 +49,25 @@ public class Controller {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("toRegister", new User());
         model.addAttribute("password2", new String());
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @ModelAttribute("user") User user, @ModelAttribute("password2") String password2) {
-        //    public String registerUser(Model model, @ModelAttribute("user") User user,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
-        String email = user.getEmail();
+    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister, @ModelAttribute("password2") String password2) {
+        //    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
+        String email = toRegister.getEmail();
         User existingUser = userRepository.findByEmail(email);
 
-        boolean canRegister = password2.equals(user.getPassword()) && email != null &&
-                (user.getType() == "Admin" || user.getType() == "Student") &&
+        boolean canRegister = password2.equals(toRegister.getPassword()) && email != null &&
+                (toRegister.getType() == "Admin" || toRegister.getType() == "Student") &&
                 existingUser == null;
 
         if (canRegister) {
-            userRepository.insert(user);
-            model.addAttribute("message", registrationSuccessMessage);
+            userRepository.insert(toRegister);
+            model.addAttribute("message",registrationSuccessMessage);
+            model.addAttribute("toLogin",toRegister);
             return "newlogin";
         }
         model.addAttribute("message", registrationFailedMessage);
@@ -83,15 +87,16 @@ public class Controller {
     // Logging in Screen
     @GetMapping("/newlogin")
     public String showSignInForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("toLogin", new User());
         return "newlogin";
     }
 
     //Once the user has logged in the Get Mapping to decide which kind of user it is
+
     @GetMapping("/logging_in")
-    public String loggingIn(Model model, @ModelAttribute("user") User user) {
-        User userFromDB = userRepository.findByEmail(user.getEmail());
-        if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(user.getPassword())) {
+    public String loggingIn(Model model, @ModelAttribute("toLogin") User toLogin) {
+        User userFromDB = userRepository.findByEmail(toLogin.getEmail());
+        if (userFromDB != null && userFromDB.getPassword() != null && userFromDB.getPassword().equals(toLogin.getPassword())) {
             System.out.println(userFromDB.getType());
             model.addAttribute("user", userFromDB);
             model.addAttribute("message", loginSuccessMessage);
@@ -103,7 +108,7 @@ public class Controller {
                 return "admin_home";
             }
         }
-        //If the user doesn't exist it won't log in
+        //If the toLogin doesn't exist it won't log in
         model.addAttribute("message", loginFailedMessage);
         return "newlogin";
     }
@@ -131,14 +136,16 @@ public class Controller {
     //Whenever he/she posts an update for there details an update is called (aka post mapping)
     @PostMapping("/student_profile")
     public String student_profile_update(Model model, @ModelAttribute("user") User user) {
-        User userFromDB = userRepository.findById(user.getId()).orElse(userRepository.findByEmail(user.getEmail()));
+        User userFromDB = userRepository.findById(user.getId()).get();
+
+
         if (user.getPassword().equals(userFromDB.getPassword())) {
             userFromDB.setName(user.getName());
             userFromDB.setEmail(user.getEmail());
             userFromDB.setNationality(user.getNationality());
             userFromDB.setDescription(user.getDescription());
             userFromDB.setPhone(user.getPhone());
-            userRepository.deleteById(user.getId());
+            userRepository.deleteById(userFromDB.getId());
             userRepository.insert(userFromDB);
             model.addAttribute("user", userFromDB);
             return "student_profile";
