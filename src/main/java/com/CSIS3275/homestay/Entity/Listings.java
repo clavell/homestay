@@ -14,6 +14,8 @@ import javax.persistence.Id;
 @Component
 @EqualsAndHashCode
 @ToString
+@Getter
+@Setter
 @Document(collection = "Listings")
 public class Listings {
     @Id

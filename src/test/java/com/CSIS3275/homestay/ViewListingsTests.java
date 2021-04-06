@@ -55,14 +55,6 @@ public class ViewListingsTests {
     @BeforeEach
     void CreateTheBasicUserAndUploadToDB(){
 
-//    String id;
-//    String address;
-//    String duration;
-//    String price;
-//    String room_description;
-//    String start_from;
-//    String adminEmailId;
-
         //add administrator to db
         admin = new User();
         admin.setPassword("asdf");

@@ -15,14 +15,7 @@
       th:action="@{/add_listing}"
       th:object="${listing}"
       method="post">
-    <!--
-        String address;
-        String duration;
-        String price;
-        String room_description;
-        String start_from;
-        String adminEmailId;
-    -->
+
     <label for="address">Address</label>
     <input type="text" th:field="*{address}" id="address" placeholder="Address"><br><br>
     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
@@ -48,7 +41,6 @@
     <span th:if="${#fields.hasErrors('room_description')}" th:errors="*{room_description}"></span>
 
     <input type="hidden" th:field="*{id}">
-    <!--    <input type="hidden" id="userid" th:field="${user.id}" >-->
 
     <input type="submit" value="Update Listing">
 
