@@ -25,5 +25,6 @@ public class Listings {
     String description;
     String start_from;
     //admin's user id. Not changing name to avoid breaks
+    //thanks for the comments though
     String adminEmailId;
 }
