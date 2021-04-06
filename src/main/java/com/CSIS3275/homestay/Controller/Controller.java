@@ -186,8 +186,8 @@ public class Controller {
     public String addListing(Model model, @ModelAttribute("listing") Listings listing, @ModelAttribute("user") User user) {
 //        Listings listings = listingRepository.findById(listingid).orElse(null);
         model.addAttribute("user",userRepository.findByEmail(user.getEmail()));
-        model.addAttribute("listing", listing);
         listingRepository.insert(listing);
+        model.addAttribute("listings", listingRepository.AdminEmailId(user.getEmail()));
         return "admin_home";
     }
 

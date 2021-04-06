@@ -17,17 +17,14 @@ import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ListingsTests {
-
+public class ViewListingsTests {
     @Value("${login.success.message}")
     String loginSuccessMessage;
 
@@ -50,7 +47,10 @@ public class ListingsTests {
 
     @Value("${listings.test.description}")
     String listingsTestDescription;
+
     private Listings listing;
+
+    private int NO_OF_LISTINGS = 2;
 
     @BeforeEach
     void CreateTheBasicUserAndUploadToDB(){
@@ -90,7 +90,7 @@ public class ListingsTests {
         listing.setDescription(listingsTestDescription);
         listing.setStart_from("today");
         //make sure the admin's id is entered correctly so make sure to get from db
-        listing.setAdminEmailId(userRepository.findByEmail(admin.getEmail()).getId());
+        listing.setAdminEmailId(userRepository.findByEmail(admin.getEmail()).getEmail());
 
         //remove test listings
         List<Listings> dbListings = listingRepository.findByDescription(listing.getDescription());
@@ -99,39 +99,30 @@ public class ListingsTests {
             ) {
                 listingRepository.delete(dbListing);
             }
-
+//        for(int i=0;i<NO_OF_LISTINGS;i++)
+            listingRepository.insert(listing);
 
         //add the listing to the parameters
-        requestParams.add("address", listing.getAddress());
-        requestParams.add("duration", listing.getDuration());
-        requestParams.add("price", listing.getPrice());
-        requestParams.add("description", listing.getDescription());
-        requestParams.add("start_from", listing.getStart_from());
-        requestParams.add("adminEmailId", listing.getAdminEmailId());
+//        requestParams.add("address", listing.getAddress());
+//        requestParams.add("duration", listing.getDuration());
+//        requestParams.add("price", listing.getPrice());
+//        requestParams.add("description", listing.getDescription());
+//        requestParams.add("start_from", listing.getStart_from());
+//        requestParams.add("adminEmailId", listing.getAdminEmailId());
 
 
     }
 
     @Test
-    void addingListingResultsInListingBeingAddedToTheAdminHomeScreen() {
-
-
-    }
-
-    @Test
-    void addingListingResultsInListingBeingAddedToTheDB() throws Exception{
-        mockMvc.perform(post("/add_listing", 42L)
+    void goingToTheAdminHomePageShowsListingsThatAreAssociatedWithTheLoggedInAdminUser() throws Exception{
+        MvcResult result = mockMvc.perform(get("/admin_home", 42L)
                 .flashAttr("user",admin)
-                .params(requestParams)
                 .content(objectMapper.writeValueAsString(admin)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andReturn();
 
-
-
-        assertEquals(listing.getPrice(),listingRepository.AdminEmailId(admin.getId()).get(0).getPrice());
-//        assertEquals(user.getEmail(), userRepository.findByEmail(user.getEmail()).getEmail());
-
+        List<Listings> listings = (List<Listings>) result.getModelAndView().getModel().get("listings");
+//        assertEquals(listings.size(),NO_OF_LISTINGS);
+//        assertEmpty(listings);
     }
-
 
 }
