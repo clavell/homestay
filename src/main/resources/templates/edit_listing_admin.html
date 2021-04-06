@@ -43,9 +43,9 @@
     <input type="text" th:field="*{start_from}" id="start_from" placeholder="start_from"><br><br>
     <span th:if="${#fields.hasErrors('start_from')}" th:errors="*{start_from}"></span>
 
-    <label for="room_description">Description</label>
-    <input type="text" th:field="*{room_description}" id="room_description" placeholder="room_description"><br><br>
-    <span th:if="${#fields.hasErrors('room_description')}" th:errors="*{room_description}"></span>
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="description"><br><br>
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
     <input type="hidden" th:field="*{id}">
 <!--    <input type="hidden" id="userid" th:field="${user.id}" >-->
