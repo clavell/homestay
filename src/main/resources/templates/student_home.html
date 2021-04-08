@@ -12,6 +12,9 @@
     <title>Student Home</title>
 </head>
 <body>
+<form th:action="@{/newlogin}" style="float:right">
+    <input type="submit" value="Log Out"  class="btn btn-primary">
+</form>
 <p th:if="${message != null}" hidden th:text="${message}"></p>
 <h1>Listings Available</h1>
 <table>
@@ -48,5 +51,7 @@
     <a th:href="@{request_student/(listingid='',userid=${user.id})}"> Check Request History </a>
 <!--<button th:href="@{request_student/(listingid='',userid=${user.id})}" class="btn btn-primary"> Check Request History </button>-->
 </div>
+
+
 </body>
 </html>

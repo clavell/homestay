@@ -12,6 +12,9 @@
     <title>Admin Home</title>
 </head>
 <body>
+<form th:action="@{/newlogin}" style="float:right">
+    <input type="submit" value="Log Out"  class="btn btn-primary">
+</form>
 <p th:if="${message != null}" hidden th:text="${message}"></p>
 <h1>Listings Posted By <span th:text="${user.name}"></span></h1>
 <table>
@@ -35,8 +38,7 @@
 
     </tr>
 </table>
-<div class="test">
-<a th:href="@{request_status/(listingid='',userid=${user.id})}"> Check Request History </a>
-</div>
+
+
 </body>
 </html>

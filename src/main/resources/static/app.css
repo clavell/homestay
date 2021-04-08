@@ -24,6 +24,10 @@
     text-decoration: none;
     text-transform: uppercase;
 }
-.test {
-    inline-size: fit-content;
+#newlogin {
+    width: 50%;
+    margin: auto;
+    display:block;
+    background-color: #9e9e9e;
+    padding: 20px;
 }
