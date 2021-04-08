@@ -231,11 +231,9 @@ public class Controller {
         for (Status status:statuses) {
             status.getStudentEmail();
         }
-
         model.addAttribute("user",admin);
         model.addAttribute("listing", listings);
         model.addAttribute("statuses",statuses);
-
         System.out.println(listings);
         System.out.println(admin);
         System.out.println(statuses);
@@ -263,5 +261,13 @@ public class Controller {
         return "requests_admin";
     }
 
+    @GetMapping("/student_dummy")
+    public String student_dummy(Model model, @RequestParam(required = false) String listingid, @RequestParam String adminId,
+                                @RequestParam String studentId) {
+        model.addAttribute("user", userRepository.findById(studentId).orElse(null));
+        model.addAttribute("listingid",listingid);
+        model.addAttribute("userid",adminId);
+        return "student_dummy";
+    }
 
 }

@@ -17,7 +17,10 @@
                 <div id="listings row" style="padding:3%">
                     <div class="card student_home">
                         <div class="card-body">
-                            <h3 class="card-title" th:text="${request.studentName}"></h3>
+                            <a th:href="@{student_dummy/(listingid=${listing.id},adminId=${request.adminId},studentId=${request.studentId})}">
+                                <h4 th:text="${request.studentName}"></h4>
+                            </a>
+
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
