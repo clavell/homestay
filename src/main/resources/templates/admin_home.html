@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Admin Home</title>
+    <title>Student Home</title>
 </head>
 <body>
 <div class="container2">
@@ -48,8 +48,6 @@
                                 <a th:href="@{edit_listing/(listingid=${listing.id},userid=${user.id})}">
                                     <button class="btn btn-primary">Edit Listing</button>
                                 </a>
-                            </li>
-                            <li class="list-group-item">
                                 <a th:href="@{request_admin/(listingid=${listing.id},userid=${user.id})}">
                                     <button class="btn btn-primary">Check Request Status</button>
                                 </a>
@@ -60,6 +58,19 @@
             </div>
         </tr>
     </table>
+    <div class="test">
+        <form th:action="@{/student_profile}" th:object="${user}" method="get">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{name}">
+            <input type="hidden" th:field="*{email}">
+            <input type="hidden" th:field="*{password}">
+            <input type="hidden" th:field="*{description}">
+            <input type="hidden" th:field="*{nationality}">
+            <input type="hidden" th:field="*{phone}">
+            <input type="submit" value="Edit/Customize Profile" class="btn btn-primary">
+        </form>
+        <br>
+    </div>
 </div>
 
 </body>

@@ -9,88 +9,64 @@
     <title>Registration</title>
 </head>
 <body>
-<p th:if="${message != null}" th:text="${message}"></p>
-
-<!--<img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
-<!--     alt="Avatar" style="width:50%">-->
-<form action="#"
-      th:action="@{/register}"
-      th:object="${toRegister}"
-      method="post" style="width: 50%; margin: 10% auto;">
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="name">Name</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->
+<div id="login">
+    <div class="container">
+        <p th:if="${message != null}" th:text="${message}"></p>
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form action="#" th:action="@{/register}" th:object="${toRegister}" method="post"
+                          style="width: 100%; margin: 10% auto;">
+                        <h1 class="text-center text-info">Welcome to Home Stay Application</h1>
+                        <h3 class="text-center text-info">Please Fill the Following Details</h3><br>
+                        <div class="form-group">
+                            <label for="name" class="text-info">Name</label>
+                            <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="nationality">Nationality</label>
+                            <input class="form-control" type="text" th:field="*{nationality}" id="nationality"
+                                   placeholder="Nationality"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="type">Type</label>
+                            <input class="form-control" type="text" th:field="*{type}" id="type" placeholder="Type"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="description">Description</label>
+                            <textarea rows="5" class="form-control" type="text" th:field="*{description}"
+                                      id="description"
+                                      placeholder="Description"></textarea><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="email">Email</label>
+                                <input class="form-control" type="text" th:field="*{email}" id="email"
+                                       placeholder="Email"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="phone">Phone</label>
+                                <input class="form-control" type="int" th:field="*{phone}" id="phone"
+                                       placeholder="Phone"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="password">Password</label>
+                                <input class="form-control" type="password" th:field="*{password}" id="password"
+                                       placeholder="Password"><br>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="password2">Re-type Password</label>
+                                <input class="form-control" type="password" th:field="${password2}" id="password2"
+                                       placeholder="Re-type Password"><br>
+                        </div>
+                        <input class="btn btn-info btn-md" type="submit" value="Register">
+                        <div id="register-link" class="text-right">
+                            <a th:href="@{/newlogin}">Already a User? Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="nationality">Nationality</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="type">Type</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{type}" id="type" placeholder="Type"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="description">Description</label>
-    <div class="col-sm-10">
-        <textarea rows="5" class="form-control" type="text" th:field="*{description}" id="description" placeholder="Description"></textarea><br><br>
-    <!--    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="email">Email</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-        <label class="col-sm-2 col-form-label" for="phone">Phone</label>
-    <div class="col-sm-10">
-        <input class="form-control" type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="password">Password</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="password2">Re-type Password</label>
-    <div class="col-sm-10">
-    <input class="form-control" type="password" th:field="${password2}" id="password2" placeholder="Re-type Password"><br><br>
-    <!--    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>-->
-    </div>
-  </div>
-
-    <!--    Only available to User -->
-    <input class="btn btn-primary" type="submit" value="Register">
-
-</form>
-<!--Only Available to Admin-->
-<!--<a href="requests_admin.html"><h2>Go Back</h2></a>-->
-
-<!--Only Available to Admin-->
-<!--<a href="student_home.html"><h2>Go Back to Listings</h2></a>-->
-
+</div>
 </body>
 </html>
