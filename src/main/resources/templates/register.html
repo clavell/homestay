@@ -32,9 +32,13 @@
                                    placeholder="Nationality"><br>
                         </div>
                         <div class="form-group">
-                            <label class="text-info" for="type">Type</label>
-                            <input class="form-control" type="text" th:field="${toRegister.type}" id="type" placeholder="Type"><br>
+                        <label class="text-info" for="type">Type</label>
+                        <select class="form-control" id="type" name="type" th:field="${toRegister.type}" >
+                            <option value="Student">Student</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                         </div>
+
                         <div class="form-group">
                             <label class="text-info" for="description">Description</label>
                             <textarea rows="5" class="form-control" type="text" th:field="${toRegister.description}"
