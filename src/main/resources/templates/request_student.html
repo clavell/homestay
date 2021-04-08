@@ -9,33 +9,66 @@
     <title>Requests</title>
 </head>
 <body>
-<h2> <span th:text="${user.name}"></span>'s Request History</h2>
+<h2><span th:text="${user.name}"></span>'s Request History</h2>
 <table>
     <tr th:each="request: ${status}">
-        <div id="listings row">
-            <div class="col-sm-6">
-<!--        <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
-<!--             alt="Avatar" style="width:20%">-->
+        <div class="col-md-6" >
+            <div id="listings row" style="padding:3%" >
+                <div class="card student_home">
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <span th:text="${request.listingAddress}"></span>
+                        </h3>
+                    </div>
 
-        <h4><b>Status Check</b></h4>
-        <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Status</label> <p th:text="${request.status}"></p>
-        <label class="col-sm-2 col-form-label">Address</label> <p th:text="${request.listingAddress}"></p>
-        <label class="col-sm-2 col-form-label">Please Contact the Family at</label> <p th:text="${request.adminEmail}"></p>
-        </div></div>
-        </div>    </tr>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <label class="col-sm-4 col-form-label">Status</label>
+                            <span th:text="${request.status}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <label class="col-sm-4 col-form-label">Address</label>
+                            <span th:text="${request.listingAddress}"></span>
+                        </li>
+                        <th:block th:if="${request.status =='Accepted' }" >
+                            <li class="list-group-item" style="background-color:green">
+                                <label class="col-sm-4 col-form-label">Contact At</label>
+                                <span th:text="${request.adminEmail}"></span>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${request.status =='To Be Decided'}">
+                            <li class="list-group-item" style="background-color:grey">
+                                <label class="col-sm-4 col-form-label">Contact At</label>
+                                <span>Not Available</span>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${request.status =='Rejected' }">
+                            <li class="list-group-item" style="background-color:red" >
+                                <label class="col-sm-4 col-form-label">Contact At</label>
+                                <span >Not Available</span>
+                            </li>
+                        </th:block>
+
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </tr>
 </table>
 <div class="test">
-<form th:action="@{/student_home}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}"></input>
-    <input type="hidden" th:field="*{name}"></input>
-    <input type="hidden" th:field="*{email}"></input>
-    <input type="hidden" th:field="*{password}"></input>
-    <input type="hidden" th:field="*{description}"></input>
-    <input type="hidden" th:field="*{nationality}"></input>
-    <input type="hidden" th:field="*{phone}"></input>
-    <input type="submit" value="Go Back to Listings" class="btn btn-primary" >
-</form>
+    <form th:action="@{/student_home}" th:object="${user}" method="get">
+        <input type="hidden" th:field="*{id}"></input>
+        <input type="hidden" th:field="*{name}"></input>
+        <input type="hidden" th:field="*{email}"></input>
+        <input type="hidden" th:field="*{password}"></input>
+        <input type="hidden" th:field="*{description}"></input>
+        <input type="hidden" th:field="*{nationality}"></input>
+        <input type="hidden" th:field="*{phone}"></input>
+        <input type="submit" value="Go Back to Listings" class="btn btn-primary">
+    </form>
 </div>
 </body>
 </html>
