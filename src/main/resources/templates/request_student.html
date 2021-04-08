@@ -31,19 +31,19 @@
                             <span th:text="${request.listingAddress}"></span>
                         </li>
                         <th:block th:if="${request.status =='Accepted' }" >
-                            <li class="list-group-item" style="background-color:green">
+                            <li class="list-group-item" style="background-color:green !important">
                                 <label class="col-sm-4 col-form-label">Contact At</label>
                                 <span th:text="${request.adminEmail}"></span>
                             </li>
                         </th:block>
                         <th:block th:if="${request.status =='To Be Decided'}">
-                            <li class="list-group-item" style="background-color:grey">
+                            <li class="list-group-item" >
                                 <label class="col-sm-4 col-form-label">Contact At</label>
                                 <span>Not Available</span>
                             </li>
                         </th:block>
                         <th:block th:if="${request.status =='Rejected' }">
-                            <li class="list-group-item" style="background-color:red" >
+                            <li class="list-group-item" style="background-color:red !important" >
                                 <label class="col-sm-4 col-form-label">Contact At</label>
                                 <span >Not Available</span>
                             </li>
