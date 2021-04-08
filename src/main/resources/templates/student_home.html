@@ -16,25 +16,25 @@
 <h1>Listings Available</h1>
 <table>
     <tr th:each="listing: ${listings}">
-        <div id="listings">
-            <div class="card">
-                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-                         alt="Avatar" style="width:20%">
-                <div class="container">
+        <div id="listings row">
+            <div class="col-sm-6">
+<!--                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
+<!--                         alt="Avatar" style="width:20%">-->
+                <div class="form-group row">
                     <h4><b>Details</b></h4>
-                    Address - <p th:text="${listing.address}" ></p>
-                    Duration(Months) - <p th:text="${listing.duration}" ></p>
-                    Price (In CAD $) - <p th:text="${listing.price}" ></p>
-                    Description - <p th:text="${listing.description}" ></p>
-                    Available From - <p th:text="${listing.start_from}" ></p>
-                    <a th:href="@{request_student/(listingid=${listing.id},userid=${user.id})}"> Request </a>
+                    <label class="col-sm-2 col-form-label">Address</label> <p th:text="${listing.address}" ></p>
+                    <label class="col-sm-2 col-form-label">Duration(Months)</label> <p th:text="${listing.duration}" ></p>
+                    <label class="col-sm-2 col-form-label">Price (In CAD $)</label> <p th:text="${listing.price}" ></p>
+                    <label class="col-sm-2 col-form-label">Description</label> <p th:text="${listing.description}" ></p>
+                    <label class="col-sm-2 col-form-label">Available From</label> <p th:text="${listing.start_from}" ></p>
+                    <a th:href="@{request_student/(listingid=${listing.id},userid=${user.id})}" class="button"> Request </a>
                 </div>
             </div>
         </div>
 
     </tr>
 </table>
-
+<div class="test">
 <form th:action="@{/student_profile}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{name}">
@@ -43,10 +43,10 @@
     <input type="hidden" th:field="*{description}">
     <input type="hidden" th:field="*{nationality}">
     <input type="hidden" th:field="*{phone}">
-    <input type="submit" value="Edit/Customize Profile">
+    <input type="submit" value="Edit/Customize Profile" class="btn btn-primary" >
 </form>
 
-<a th:href="@{request_student/(listingid='',userid=${user.id})}"> Check Request History </a>
-
+<button th:href="@{request_student/(listingid='',userid=${user.id})}" class="btn btn-primary"> Check Request History </button>
+</div>
 </body>
 </html>
