@@ -6,39 +6,61 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script>
-        var id;
-    </script>
     <title>Admin Home</title>
 </head>
 <body>
-<form th:action="@{/newlogin}" style="float:right">
-    <input type="submit" value="Log Out"  class="btn btn-primary">
-</form>
-<p th:if="${message != null}" hidden th:text="${message}"></p>
-<h1>Listings Posted By <span th:text="${user.name}"></span></h1>
-<table>
-    <tr th:each="listing: ${listings}">
-        <div id="listings row">
-            <div class="col-sm-6">
-                <!--                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
-                <!--                         alt="Avatar" style="width:20%">-->
-                <div class="form-group row">
-                    <h4><b>Details</b></h4>
-                    <label class="col-sm-2 col-form-label">Address</label> <p th:text="${listing.address}" ></p>
-                    <label class="col-sm-2 col-form-label">Duration(Months)</label> <p th:text="${listing.duration}" ></p>
-                    <label class="col-sm-2 col-form-label">Price (In CAD $)</label> <p th:text="${listing.price}" ></p>
-                    <label class="col-sm-2 col-form-label">Description</label> <p th:text="${listing.description}" ></p>
-                    <label class="col-sm-2 col-form-label">Available From</label> <p th:text="${listing.start_from}" ></p>
-                    <a th:href="@{edit_listing/(listingid=${listing.id},userid=${user.id})}"> Edit Listing </a>
-                    <a th:href="@{request_admin/(listingid=${listing.id},userid=${user.id})}"> Check Request Status </a>
+<div class="container2">
+    <form th:action="@{/newlogin}" style="float:right">
+        <input type="submit" value="Log Out" class="btn btn-primary">
+    </form>
+    <p th:if="${message != null}" hidden th:text="${message}"></p>
+    <h1 align="center">Listings Posted By <span th:text="${user.name}"></span></h1>
+    <table>
+        <tr th:each="listing: ${listings}">
+            <div class="col-md-6">
+                <div id="listings row" style="padding:3%">
+                    <div class="card student_home">
+                        <div class="card-body">
+                            <h3 class="card-title" th:text="${listing.address}"></h3>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Address</label>
+                                <p th:text="${listing.address}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Duration(Months)</label>
+                                <p th:text="${listing.duration}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Price (In CAD $)</label>
+                                <p th:text="${listing.price}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Description</label>
+                                <p th:text="${listing.description}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Available From</label>
+                                <p th:text="${listing.start_from}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{edit_listing/(listingid=${listing.id},userid=${user.id})}">
+                                    <button class="btn btn-primary">Edit Listing</button>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a th:href="@{request_admin/(listingid=${listing.id},userid=${user.id})}">
+                                    <button class="btn btn-primary">Check Request Status</button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-
-    </tr>
-</table>
-
+        </tr>
+    </table>
+</div>
 
 </body>
 </html>

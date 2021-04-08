@@ -6,13 +6,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script>
-        var id;
-
-
-
-
-    </script>
     <title>Student Home</title>
 </head>
 <body>
@@ -20,7 +13,7 @@
 <form th:action="@{/newlogin}" style="float:right">
     <input type="submit" value="Log Out" class="btn btn-primary">
 </form>
-<p th:if="${message != null}" hidden th:text="${message}"></span>
+<p th:if="${message != null}" hidden th:text="${message}"></p>
 <h1 align="center">Listings Available</h1>
 <table>
     <tr th:each="listing: ${listings}">
@@ -53,7 +46,6 @@
                             </a>
                         </li>
                     </ul>
-
                 </div>
             </div>
         </div>
