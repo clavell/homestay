@@ -13,16 +13,19 @@
 <h2><span th:text="${listing.address}"></span> Request History</h2>
 <table>
     <tr th:each="request: ${statuses}">
+        <div id="listings row">
+            <div class="col-sm-6">
         <h4><b>Status Check</b></h4>
-        Status - <p th:text="${request.status}"></p>
-        Address - <p th:text="${request.listingAddress}"></p>
-        Please Contact the Student At - <p th:text="${request.studentEmail}"></p>
-
+        <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label> <p th:text="${request.status}"></p>
+        <label class="col-sm-2 col-form-label">Address</label> <p th:text="${request.listingAddress}"></p>
+        <label class="col-sm-2 col-form-label">Please Contact the Student At</label> <p th:text="${request.studentEmail}"></p>
+<br>
         <form action="#"
               th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
               studentId=${request.studentId},status='Accepted')}"
               method="post">
-            <input type="submit" value="Accept">
+            <input type="submit" value="Accept" class="btn btn-primary" >
         </form>
 
 
@@ -30,13 +33,16 @@
               th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
               studentId=${request.studentId},status='Rejected')}"
               method="post">
-            <input type="submit" value="Reject">
+            <input type="submit" value="Reject" class="btn btn-primary" >
         </form>
-
+        </div>
+            </div>
+        </div>
 
     </tr>
 
 </table>
+<div class="test">
 <form th:action="@{/admin_home}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{name}">
@@ -45,8 +51,8 @@
     <input type="hidden" th:field="*{description}">
     <input type="hidden" th:field="*{nationality}">
     <input type="hidden" th:field="*{phone}">
-    <input type="submit" value="Go Back to Listings">
+    <input type="submit" value="Go Back to Listings" class="btn btn-primary" >
 </form>
-
+</div>
 </body>
 </html>
