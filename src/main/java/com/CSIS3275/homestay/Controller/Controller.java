@@ -1,6 +1,7 @@
 package com.CSIS3275.homestay.Controller;
 
 import com.CSIS3275.homestay.Entity.Listings;
+import com.CSIS3275.homestay.Entity.Password2;
 import com.CSIS3275.homestay.Entity.Status;
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.ListingRepository;
@@ -47,21 +48,25 @@ public class Controller {
     //Creating a New User Getting and Posting
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("toRegister", new User());
-        model.addAttribute("password2", new String());
+    public String showRegistrationForm(Model model, @ModelAttribute("toRegister") User toRegister, @ModelAttribute("password2") Password2 password2) {
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister, @ModelAttribute("password2") String password2) {
+    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister, @ModelAttribute("password2") Password2 password2) {
         //    public String registerUser(Model model, @ModelAttribute("toRegister") User toRegister,@RequestParam String password, @RequestParam String email, @RequestParam String name ){
         String email = toRegister.getEmail();
         User existingUser = userRepository.findByEmail(email);
 
-        boolean canRegister = password2.equals(toRegister.getPassword()) && email != null &&
-                (toRegister.getType() == "Admin" || toRegister.getType() == "Student") &&
-                existingUser == null;
+        String password2Value = password2.getValue();
+        boolean passwordsMatch = password2Value.equals(toRegister.getPassword());
+        boolean emailExists = email != null;
+        //integration test does not uncover broken getType equals admin or not. (had it as toRegister.getType() == "Student" and tests were passing. When actually using the app it does not work, however.
+        boolean typeIsAdminOrStudent = toRegister.getType()!=null && (toRegister.getType().equals( "Admin") || toRegister.getType().equals("Student"));
+        boolean noUserWithThisEmailInDB = existingUser == null;
+        boolean canRegister = passwordsMatch && emailExists &&
+                typeIsAdminOrStudent &&
+                noUserWithThisEmailInDB;
 
         if (canRegister) {
             userRepository.insert(toRegister);
