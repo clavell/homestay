@@ -10,7 +10,7 @@
 </head>
 <body>
 <p th:if="${message != null}" th:text="${message}"></p>
-<form th:action="@{/logging_in}" th:object="${toLogin}" method="get">
+<form th:action="@{/logging_in}" th:object="${toLogin}" method="get" style="width: 50%; margin: 10% auto">
     <div class="form-group">
     <label for="email">Enter Email</label>
     <input class="form-control" type="text" id="email" th:field="*{email}" placeholder="abc@xyz.com"/><br><br>
