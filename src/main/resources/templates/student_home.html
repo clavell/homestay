@@ -19,13 +19,13 @@
 <h1>Listings Available</h1>
 <table>
     <tr th:each="listing: ${listings}">
-        <div id="listings row">
-            <div class="col-sm-6">
+        <div id="listings row" style="padding:3%">
+            <div >
 <!--                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
 <!--                         alt="Avatar" style="width:20%">-->
                 <div class="form-group row">
-                    <h4><b>Details</b></h4>
-                    <label class="col-sm-2 col-form-label">Address</label> <p th:text="${listing.address}" ></p>
+                    <h4 th:text="${listing.address}"></h4>
+
                     <label class="col-sm-2 col-form-label">Duration(Months)</label> <p th:text="${listing.duration}" ></p>
                     <label class="col-sm-2 col-form-label">Price (In CAD $)</label> <p th:text="${listing.price}" ></p>
                     <label class="col-sm-2 col-form-label">Description</label> <p th:text="${listing.description}" ></p>
@@ -34,9 +34,16 @@
                 </div>
             </div>
         </div>
-
     </tr>
 </table>
+<ul class="pager">
+    <li class="previous">
+        <a href="#">&larr; Older</a>
+    </li>
+    <li class="next">
+        <a href="#">Newer &rarr;</a>
+    </li>
+</ul>
 <div class="test">
 <form th:action="@{/student_profile}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}">
