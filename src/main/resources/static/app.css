@@ -26,7 +26,7 @@
 } */
 
 body {
-  background-color: #17a2b8;
+  background-color: #17a2b8 !important;
   height: 100%;
 }
 #login .container #login-row #login-column #login-box {
@@ -51,4 +51,14 @@ div#login-column {
 }
 .test {
     inline-size: fit-content;
+    margin: auto;
+}
+.container2 {
+    width: 90%;
+    margin: auto;
+    padding: 1%;
+        background-color: antiquewhite;
+}
+.list-group-item{
+background:blanchedalmond !important;
 }
