@@ -9,39 +9,14 @@
 <h2><span th:text="${listing.address}"></span> Request History</h2>
 <table>
     <tr th:each="request: ${statuses}">
+        <h4><b>Status Check</b></h4>
+        Status - <p th:text="${request.status}"></p>
+        Address - <p th:text="${request.listingAddress}"></p>
+        Please Contact the Student At - <p th:text="${request.studentEmail}"></p>
         <form action="#"
               th:action="@{/request_admin}"
-              th:object="${request}"
               method="post">
 
-            <!--String status;
-                String listingId;
-                String listingAddress;
-                String adminId;
-                String adminEmail;
-                String studentId;
-                String studentEmail;
-               -->
-
-            <label for="status">status</label>
-            <input type="text" th:field="*{status}" id="status"
-                   placeholder="status"><br><br>
-            <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
-
-            <label for="studentEmail">studentEmail</label>
-            <input type="text" th:field="*{studentEmail}" id="studentEmail"
-                   placeholder="studentEmail"><br><br>
-            <span th:if="${#fields.hasErrors('studentEmail')}" th:errors="*{studentEmail}" aria-readonly="true"></span>
-
-            <label for="studentId">studentId</label>
-            <input type="text" th:field="*{studentId}" id="studentId"
-                   placeholder="studentId"><br><br>
-            <span th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}" aria-readonly="true"></span>
-
-            <input type="hidden" th:field="*{id}">
-            <!--    <input type="hidden" id="userid" th:field="${user.id}" >-->
-
-            <input type="submit" value="Update Request">
 
         </form>
     </tr>
