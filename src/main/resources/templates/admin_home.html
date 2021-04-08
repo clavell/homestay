@@ -16,11 +16,11 @@
 <h1>Listings Posted By <span th:text="${user.name}"></span></h1>
 <table>
     <tr th:each="listing: ${listings}">
-        <div id="listings">
-            <div class="card">
-                <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-                     alt="Avatar" style="width:20%">
-                <div class="container">
+        <div id="listings row">
+            <div class="col-sm-6">
+                <!--                    <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
+                <!--                         alt="Avatar" style="width:20%">-->
+                <div class="form-group row">
                     <h4><b>Details</b></h4>
                     Address - <p th:text="${listing.address}" ></p>
                     Duration(Months) - <p th:text="${listing.duration}" ></p>
@@ -35,8 +35,8 @@
 
     </tr>
 </table>
-
+<div class="test">
 <a th:href="@{request_status/(listingid='',userid=${user.id})}"> Check Request History </a>
-
+</div>
 </body>
 </html>
