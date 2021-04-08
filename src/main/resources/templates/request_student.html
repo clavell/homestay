@@ -9,20 +9,23 @@
     <title>Requests</title>
 </head>
 <body>
-<h1>Request History</h1>
 <h2> <span th:text="${user.name}"></span>'s Request History</h2>
 <table>
     <tr th:each="request: ${status}">
-
-        <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-             alt="Avatar" style="width:20%">
+        <div id="listings row">
+            <div class="col-sm-6">
+<!--        <img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
+<!--             alt="Avatar" style="width:20%">-->
 
         <h4><b>Status Check</b></h4>
-        Status - <p th:text="${request.status}"></p>
-        Address - <p th:text="${request.listingAddress}"></p>
-        Please Contact the Family at - <p th:text="${request.adminEmail}"></p>
-    </tr>
+        <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label> <p th:text="${request.status}"></p>
+        <label class="col-sm-2 col-form-label">Address</label> <p th:text="${request.listingAddress}"></p>
+        <label class="col-sm-2 col-form-label">Please Contact the Family at</label> <p th:text="${request.adminEmail}"></p>
+        </div></div>
+        </div>    </tr>
 </table>
+<div class="test">
 <form th:action="@{/student_home}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}"></input>
     <input type="hidden" th:field="*{name}"></input>
@@ -31,8 +34,8 @@
     <input type="hidden" th:field="*{description}"></input>
     <input type="hidden" th:field="*{nationality}"></input>
     <input type="hidden" th:field="*{phone}"></input>
-    <input type="submit" value="Go Back to Listings">
+    <input type="submit" value="Go Back to Listings" class="btn btn-primary" >
 </form>
-
+</div>
 </body>
 </html>
