@@ -17,40 +17,48 @@
       th:action="@{/register}"
       th:object="${toRegister}"
       method="post">
+    <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
+    <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name"><br><br>
     <!--    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>-->
-
+    </div>
+    <div class="form-group">
     <label for="nationality">Nationality</label>
-    <input type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
+    <input class="form-control" type="text" th:field="*{nationality}" id="nationality" placeholder="Nationality"><br><br>
     <!--    <span th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>-->
-
+    </div>
+    <div class="form-group">
     <label for="type">Type</label>
-    <input type="text" th:field="*{type}" id="type" placeholder="Type"><br><br>
+    <input class="form-control" type="text" th:field="*{type}" id="type" placeholder="Type"><br><br>
     <!--    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>-->
-    
+    </div>
+    <div class="form-group">
     <label for="description">Description</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
+    <input class="form-control" type="text" th:field="*{description}" id="description" placeholder="Description"><br><br>
     <!--    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>-->
-
+    </div>
+    <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
+    <input class="form-control" type="text" th:field="*{email}" id="email" placeholder="Email"><br><br>
     <!--    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
-
+    </div>
+    <div class="form-group">
         <label for="phone">Phone</label>
-        <input type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
+        <input class="form-control" type="int" th:field="*{phone}" id="phone" placeholder="Phone"><br><br>
     <!--    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>-->
-
+    </div>
+    <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" th:field="*{password}" id="password" placeholder="Password"><br><br>
+    <input class="form-control" type="password" th:field="*{password}" id="password" placeholder="Password"><br><br>
     <!--    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
-
+    </div>
+    <div class="form-group">
     <label for="password2">Re-type Password</label>
-    <input type="password" th:field="${password2}" id="password2" placeholder="Re-type Password"><br><br>
+    <input class="form-control" type="password" th:field="${password2}" id="password2" placeholder="Re-type Password"><br><br>
     <!--    <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>-->
-
+    </div>
     <!--    Only available to User -->
-    <input type="submit" value="Register">
+    <input type="submit" class="btn btn-primary" value="Register">
 
 </form>
 <!--Only Available to Admin-->
