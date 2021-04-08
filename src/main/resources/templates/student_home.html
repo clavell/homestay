@@ -45,8 +45,8 @@
     <input type="hidden" th:field="*{phone}">
     <input type="submit" value="Edit/Customize Profile" class="btn btn-primary" >
 </form>
-
-<button th:href="@{request_student/(listingid='',userid=${user.id})}" class="btn btn-primary"> Check Request History </button>
+    <a th:href="@{request_student/(listingid='',userid=${user.id})}"> Check Request History </a>
+<!--<button th:href="@{request_student/(listingid='',userid=${user.id})}" class="btn btn-primary"> Check Request History </button>-->
 </div>
 </body>
 </html>
