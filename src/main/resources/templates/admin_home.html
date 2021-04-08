@@ -28,7 +28,7 @@
                     Description - <p th:text="${listing.description}" ></p>
                     Available From - <p th:text="${listing.start_from}" ></p>
                     <a th:href="@{edit_listing/(listingid=${listing.id},userid=${user.id})}"> Edit Listing </a>
-                    <a th:href="@{request_status/(listingid=${listing.id},userid=${user.id})}"> Check Request Status </a>
+                    <a th:href="@{request_admin/(listingid=${listing.id},userid=${user.id})}"> Check Request Status </a>
                 </div>
             </div>
         </div>

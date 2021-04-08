@@ -222,7 +222,7 @@ public class Controller {
         return "edit_listing_admin";
     }
 
-    @GetMapping("/request_status")
+    @GetMapping("/request_admin")
     public String requestStatus(Model model, @RequestParam(required = false) String listingid, @RequestParam String userid) {
         Listings listings = listingRepository.findById(listingid).orElse(null);
         User admin = userRepository.findById(userid).orElse(null);
@@ -233,6 +233,26 @@ public class Controller {
         System.out.println(listings);
         System.out.println(admin);
         System.out.println(statuses);
+        return "requests_admin";
+    }
+
+    @PostMapping("/request_admin")
+    public String updateStatus(Model model, @RequestParam(required = false) String listingId, @RequestParam String adminId,
+                               @RequestParam String studentId,@RequestParam String status) {
+        System.out.println("Post Mapping");
+        Listings listings = listingRepository.findById(listingId).orElse(null);
+        User admin = userRepository.findById(adminId).orElse(null);
+        User student = userRepository.findById(studentId).orElse(null);
+        Status stat = statusRepository.AdminEmailAndAndStudentEmailAndListingId(admin.getEmail(),student.getEmail(), listingId);
+        statusRepository.delete(stat);
+        stat.setStatus(status);
+        statusRepository.insert(stat);
+        model.addAttribute("user",admin);
+        model.addAttribute("listing", listings);
+        model.addAttribute("statuses",stat);
+        System.out.println(listings);
+        System.out.println(admin);
+        System.out.println(stat);
         return "requests_admin";
     }
 

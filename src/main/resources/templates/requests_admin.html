@@ -13,12 +13,23 @@
         Status - <p th:text="${request.status}"></p>
         Address - <p th:text="${request.listingAddress}"></p>
         Please Contact the Student At - <p th:text="${request.studentEmail}"></p>
+
         <form action="#"
-              th:action="@{/request_admin}"
+              th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
+              studentId=${request.studentId},status='Accepted')}"
               method="post">
-
-
+            <input type="submit" value="Accept">
         </form>
+
+
+        <form action="#"
+              th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
+              studentId=${request.studentId},status='Rejected')}"
+              method="post">
+            <input type="submit" value="Reject">
+        </form>
+
+
     </tr>
 
 </table>
