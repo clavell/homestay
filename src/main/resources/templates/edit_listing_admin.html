@@ -9,79 +9,72 @@
     <title>Single Listing</title>
 </head>
 <body>
+<div id="login">
+    <div class="container">
+        <p th:if="${message != null}" th:text="${message}"></p>
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form action="#" th:action="@{/edit_listing}" th:object="${listing}" method="post"
+                          style="width: 100%; margin: 3% auto 0%;">
+                        <h1 class="text-center text-info">Editing Listing</h1><br>
+                        <div class="form-group">
+                            <label class="text-info" for="address">Address</label>
+                                <input class="form-control" type="text" th:field="*{address}" id="address"
+                                       placeholder="Address"><br>
+                                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="text-info" for="duration">Duration (In Months)</label>
+                                <input class="form-control" type="text" th:field="*{duration}" id="duration"
+                                       placeholder="Duration"><br>
+                                <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="adminEmailId">Email</label>
+                                <input class="form-control" type="text" th:field="*{adminEmailId}" id="adminEmailId"
+                                       placeholder="adminEmailId"><br>
+                                <span th:if="${#fields.hasErrors('adminEmailId')}" th:errors="*{adminEmailId}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="price">Price</label>
+                                <input class="form-control" type="text" th:field="*{price}" id="price"
+                                       placeholder="price"><br>
+                                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="start_from">Start From (Please Enter a
+                                Date)</label>
+                                <input class="form-control" type="text" th:field="*{start_from}" id="start_from"
+                                       placeholder="start_from"><br>
+                                <span th:if="${#fields.hasErrors('start_from')}" th:errors="*{start_from}"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="description">Description</label>
+                                <input class="form-control" type="text" th:field="*{description}" id="description"
+                                       placeholder="description"><br>
+                                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                        </div>
+                        <input type="hidden" th:field="*{id}">
+                        <input class="btn btn-info btn-md" type="submit" value="Update Listing">
+                    </form>
 
-<!--<img src="https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"-->
-<!--     alt="Avatar" style="width:80%">-->
-<form action="#"
-      th:action="@{/edit_listing}"
-      th:object="${listing}"
-      method="post" style="width: 50%; margin: 10% auto 0%;">
-    <div class="form-group row">
-    <label class="col-sm-2 col-form-label" for="address">Address</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{address}" id="address" placeholder="Address"><br><br>
-    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                    <form th:action="@{/admin_home}" th:object="${user}" method="get"
+                          style="width: 100%; margin: 1% 0%;">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{name}">
+                        <input type="hidden" th:field="*{email}">
+                        <input type="hidden" th:field="*{password}">
+                        <input type="hidden" th:field="*{description}">
+                        <input type="hidden" th:field="*{nationality}">
+                        <input type="hidden" th:field="*{phone}">
+                        <input class="btn btn-info btn-md" type="submit" value="Go Back to Listings">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="duration">Duration</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{duration}" id="duration" placeholder="Duration"><br><br>
-    <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="adminEmailId">Email</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{adminEmailId}" id="adminEmailId" placeholder="adminEmailId"><br><br>
-    <span th:if="${#fields.hasErrors('adminEmailId')}" th:errors="*{adminEmailId}"></span>
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="price">Price</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{price}" id="price" placeholder="price"><br><br>
-    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="start_from">Start From (Please Enter a Date)</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{start_from}" id="start_from" placeholder="start_from"><br><br>
-    <span th:if="${#fields.hasErrors('start_from')}" th:errors="*{start_from}"></span>
-    </div>
-  </div>
-    <div class="form-group row">
-
-    <label class="col-sm-2 col-form-label" for="description">Description</label>
-<div class="col-sm-10">
-    <input class="form-control" type="text" th:field="*{description}" id="description" placeholder="description"><br><br>
-    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-    </div>
-  </div>
-
-    <input type="hidden" th:field="*{id}">
-<!--    <input type="hidden" id="userid" th:field="${user.id}" >-->
-
-    <input class="btn btn-primary" type="submit" value="Update Listing">
-
-</form>
-
-<form th:action="@{/admin_home}" th:object="${user}" method="get" style="width: 50%; margin: 0% auto 0%;">
-    <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{name}">
-    <input type="hidden" th:field="*{email}">
-    <input type="hidden" th:field="*{password}">
-    <input type="hidden" th:field="*{description}">
-    <input type="hidden" th:field="*{nationality}">
-    <input type="hidden" th:field="*{phone}">
-    <input class="btn btn-primary" type="submit" value="Go Back to Listings">
-</form>
-
-
+</div>
 </body>
 </html>

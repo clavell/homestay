@@ -165,6 +165,7 @@ public class Controller {
             s.setAdminId(admin.getId());
             s.setStudentEmail(student.getEmail());
             s.setStudentId(student.getId());
+            s.setStudentName(student.getName());
             s.setListingId(listingid);
             s.setListingAddress(listings.getAddress());
             s.setStatus("To Be Decided");
@@ -227,9 +228,14 @@ public class Controller {
         Listings listings = listingRepository.findById(listingid).orElse(null);
         User admin = userRepository.findById(userid).orElse(null);
         List<Status> statuses = statusRepository.AdminEmailAndListingId(admin.getEmail(), listingid);
+        for (Status status:statuses) {
+            status.getStudentEmail();
+        }
+
         model.addAttribute("user",admin);
         model.addAttribute("listing", listings);
         model.addAttribute("statuses",statuses);
+
         System.out.println(listings);
         System.out.println(admin);
         System.out.println(statuses);
@@ -249,10 +255,11 @@ public class Controller {
         statusRepository.insert(stat);
         model.addAttribute("user",admin);
         model.addAttribute("listing", listings);
-        model.addAttribute("statuses",stat);
+        List<Status> statuses = statusRepository.AdminEmailAndListingId(admin.getEmail(), listingId);
+        model.addAttribute("statuses",statuses);
         System.out.println(listings);
         System.out.println(admin);
-        System.out.println(stat);
+        System.out.println(statuses);
         return "requests_admin";
     }
 

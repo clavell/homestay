@@ -9,50 +9,66 @@
     <title>Requests</title>
 </head>
 <body>
-<h1>Request History</h1>
-<h2><span th:text="${listing.address}"></span> Request History</h2>
-<table>
-    <tr th:each="request: ${statuses}">
-        <div id="listings row">
-            <div class="col-sm-6">
-        <h4><b>Status Check</b></h4>
-        <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Status</label> <p th:text="${request.status}"></p>
-        <label class="col-sm-2 col-form-label">Address</label> <p th:text="${request.listingAddress}"></p>
-        <label class="col-sm-2 col-form-label">Please Contact the Student At</label> <p th:text="${request.studentEmail}"></p>
-<br>
-        <form action="#"
-              th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
-              studentId=${request.studentId},status='Accepted')}"
-              method="post">
-            <input type="submit" value="Accept" class="btn btn-primary" >
-        </form>
+<div class="container2">
+    <h2 align="center"><span th:text="${listing.address}"></span> (Requests) </h2>
+    <table>
+        <tr th:each="request: ${statuses}">
+            <div class="col-md-6">
+                <div id="listings row" style="padding:3%">
+                    <div class="card student_home">
+                        <div class="card-body">
+                            <h3 class="card-title" th:text="${request.studentName}"></h3>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Current Status</label>
+                                <p th:text="${request.status}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Address</label>
+                                <p th:text="${request.listingAddress}"></p>
+                            </li>
+                            <li class="list-group-item">
+                                <label class="col-sm-4 col-form-label">Student's Email</label>
+                                <p th:text="${request.studentEmail}"></p>
+                            </li>
 
+                                <div class="col-sm-6" style="background: rgb(154, 230, 230) !important;">
+                                    <form action="#"
+                                          th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
+                                           studentId=${request.studentId},status='Accepted')}"
+                                          method="post">
+                                        <input type="submit" value="Accept" class="btn btn-info btn-md"
+                                               style="width:100%">
+                                    </form>
+                                </div>
+                                <div class="col-sm-6" style="background: rgb(154, 230, 230) !important;">
+                                    <form action="#"
+                                          th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
+                                            studentId=${request.studentId},status='Rejected')}"
+                                          method="post">
+                                        <input type="submit" value="Reject" class="btn btn-info btn-md"
+                                               style="width:100%">
+                                    </form>
+                                </div>
 
-        <form action="#"
-              th:action="@{/request_admin/(listingId=${listing.id},adminId=${request.adminId},
-              studentId=${request.studentId},status='Rejected')}"
-              method="post">
-            <input type="submit" value="Reject" class="btn btn-primary" >
-        </form>
-        </div>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-
-    </tr>
-
-</table>
-<div class="test">
-<form th:action="@{/admin_home}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{name}">
-    <input type="hidden" th:field="*{email}">
-    <input type="hidden" th:field="*{password}">
-    <input type="hidden" th:field="*{description}">
-    <input type="hidden" th:field="*{nationality}">
-    <input type="hidden" th:field="*{phone}">
-    <input type="submit" value="Go Back to Listings" class="btn btn-primary" >
-</form>
-</div>
+        </tr>
+    </table>
+    <div class="test">
+        <form th:action="@{/admin_home}" th:object="${user}" method="get">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{name}">
+            <input type="hidden" th:field="*{email}">
+            <input type="hidden" th:field="*{password}">
+            <input type="hidden" th:field="*{description}">
+            <input type="hidden" th:field="*{nationality}">
+            <input type="hidden" th:field="*{phone}">
+            <input type="submit" value="Go Back to Listings" class="btn btn-primary">
+        </form>
+    </div>
 </body>
 </html>

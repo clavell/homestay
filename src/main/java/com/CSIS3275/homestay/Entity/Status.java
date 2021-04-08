@@ -26,4 +26,5 @@ public class Status {
     String adminEmail;
     String studentId;
     String studentEmail;
+    String studentName;
 }
