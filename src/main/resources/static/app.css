@@ -45,3 +45,10 @@ div#login-column {
     width: 100% !important;
 }
 
+.student_home{
+    margin:auto;
+    width:80%
+}
+.test {
+    inline-size: fit-content;
+}
