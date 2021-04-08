@@ -15,48 +15,50 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
-                    <form action="#" th:action="@{/register}" th:object="${toRegister}" method="post"
-                          style="width: 100%; margin: 5% auto;">
+<!--                          th:object="${toRegister}" --><!-- this should be inside the form-->
+                    <form action="#" th:action="@{/register}"
+                          method="post"
+                          style="width: 100%; margin: 5% auto;" >
                         <h1 class="text-center text-info">Welcome to Home Stay Application</h1>
                         <h3 class="text-center text-info">Please Fill the Following Details</h3><br>
                         
                         <div class="form-group">
                             <label for="name" class="text-info">Name</label>
-                            <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="Name"><br>
+                            <input class="form-control" type="text" th:field="${toRegister.name}" id="name" placeholder="Name"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="nationality">Nationality</label>
-                            <input class="form-control" type="text" th:field="*{nationality}" id="nationality"
+                            <input class="form-control" type="text" th:field="${toRegister.nationality}" id="nationality"
                                    placeholder="Nationality"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="type">Type</label>
-                            <input class="form-control" type="text" th:field="*{type}" id="type" placeholder="Type"><br>
+                            <input class="form-control" type="text" th:field="${toRegister.type}" id="type" placeholder="Type"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="description">Description</label>
-                            <textarea rows="5" class="form-control" type="text" th:field="*{description}"
+                            <textarea rows="5" class="form-control" type="text" th:field="${toRegister.description}"
                                       id="description"
                                       placeholder="Description"></textarea><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="email">Email</label>
-                                <input class="form-control" type="text" th:field="*{email}" id="email"
+                                <input class="form-control" type="text" th:field="${toRegister.email}" id="email"
                                        placeholder="Email"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="phone">Phone</label>
-                                <input class="form-control" type="int" th:field="*{phone}" id="phone"
+                                <input class="form-control" type="text" th:field="${toRegister.phone}" id="phone"
                                        placeholder="Phone"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="password">Password</label>
-                                <input class="form-control" type="password" th:field="*{password}" id="password"
+                                <input class="form-control" type="password" th:field="${toRegister.password}" id="password"
                                        placeholder="Password"><br>
                         </div>
                         <div class="form-group">
                             <label class="text-info" for="password2">Re-type Password</label>
-                                <input class="form-control" type="password" th:field="${password2}" id="password2"
+                                <input class="form-control" type="text" th:field="${password2.value}" id="password2"
                                        placeholder="Re-type Password"><br>
                         </div>
                         <input class="btn btn-info btn-md" type="submit" value="Register">

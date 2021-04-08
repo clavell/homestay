@@ -65,7 +65,8 @@ public class RegistrationTests {
 
         requestParams.add("name", user.getName());
         requestParams.add("password", user.getPassword());
-        requestParams.add("password2", user.getPassword());
+        //value is the retyped password
+        requestParams.add("value", user.getPassword());
         requestParams.add("email", user.getEmail());
         requestParams.add("phone", user.getPhone());
         requestParams.add("type", user.getType());
@@ -94,8 +95,8 @@ public class RegistrationTests {
     @Test
     void registeringUserWithWrongPasswordDoesNotAddThemToDatabase() throws Exception{
         //replace retyped password with incorrect value
-        requestParams.remove("password2");
-        requestParams.add("password2", "not the password");
+        requestParams.remove("value");
+        requestParams.add("value", "not the password");
 
         mockMvc.perform(post("/register", 42L)
                 .params(requestParams)
@@ -137,8 +138,8 @@ public class RegistrationTests {
 
     @Test
     void passwordsMustMatchToRegisterUser()throws Exception{
-        requestParams.remove("password2");
-        requestParams.add("password2", "not the password");
+        requestParams.remove("value");
+        requestParams.add("value", "not the password");
         MvcResult result = mockMvc.perform(post("/register", 42L)
                 .params(requestParams)
                 .content(objectMapper.writeValueAsString(user)))
