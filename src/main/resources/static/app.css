@@ -1,12 +1,12 @@
 body {
-  background-color: #17a2b8 !important;
+  background-color: #1a936f !important;
   /* height: 100%; */
 }
 #login .container #login-row #login-column #login-box {
   margin: 10% auto 5%;
   width: 100%;
   border: 2px solid #9c9c9c;
-  background-color: #eaeaea;
+  background-color: #f3e9d2;
 }
 #login .container #login-row #login-column #login-box #login-form {
   padding: 20px;
@@ -37,7 +37,7 @@ div#login-column {
   width: 90%;
   margin: 5%;
   padding: 1%;
-  background-color: #eaeaea;
+  background-color: #f3e9d2;
 }
 .list-group-item {
   background: rgb(154, 230, 230) !important;

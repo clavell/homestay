@@ -15,57 +15,60 @@
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
                     <form action="#" th:action="@{/add_listing}" method="post">
-						<h1 class="text-center text-info">Add a Listing</h1>
-						<h3 class="text-center text-info">Please Fill the Following Details</h3><br>
-						<div class="form-group">
-							<label class="text-info" for="address">Address</label>
-							<input class="form-control" type="text" th:field="${listing.address}" id="address" placeholder="Address">
-						</div>
-<!--						<div class="form-group">-->
-<!--							<label class="text-info" for="adminEmailId">Email for Contact</label>-->
-<!--							<input class="form-control" type="text" th:field="${listing.adminEmailId}" id="adminEmailId" placeholder="adminEmailId" value="${user.email}" readonly>-->
-<!--						</div>-->
-						<div class="form-group">
-							<label class="text-info" for="duration">Duration (In Months)</label>
-							<input class="form-control" type="text" th:field="${listing.duration}" id="duration" placeholder="Duration">
-						</div>
-						<div class="form-group">
-							<label class="text-info" for="price">Price (In CAD)</label>
-							<input class="form-control" type="text" th:field="${listing.price}" id="price" placeholder="price">
-						</div>
-						<div class="form-group">
-							<label class="text-info" for="start_from">Starting Date</label>
-							<input class="form-control" type="text" th:field="${listing.start_from}" id="start_from" placeholder="DD-MM-YYYY"><br><br>
-						</div>
-						<div class="form-group">
-							<label class="text-info" for="room_description">Description (Same as Account)</label>
-							<input class="form-control" type="text" th:field="${listing.description}" id="room_description" placeholder="room_description">
-						</div>
-						<div class="form-group">
-							<input type="hidden" th:field="${user.id}">
-							<input type="hidden" th:field="${user.name}">
-							<input type="hidden" th:field="${user.email}">
-							<input type="hidden" th:field="${user.password}">
-							<input type="hidden" th:field="${user.description}">
-							<input type="hidden" th:field="${user.nationality}">
-							<input type="hidden" th:field="${user.phone}">
-							<input class="form-control" type="submit" value="Add Lisiting">
-						</div>
-					</form>
+                        <h1 class="text-center text-info">Add a Listing</h1>
+                        <h3 class="text-center text-info">Please Fill the Following Details</h3><br>
+                        <div class="form-group">
+                            <label class="text-info" for="address">Address</label>
+                            <input class="form-control" type="text" th:field="${listing.address}" id="address"
+                                   placeholder="Address">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="duration">Duration (In Months)</label>
+                            <input class="form-control" type="text" th:field="${listing.duration}" id="duration"
+                                   placeholder="Duration">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="price">Price (In CAD)</label>
+                            <input class="form-control" type="text" th:field="${listing.price}" id="price"
+                                   placeholder="price">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="start_from">Starting Date</label>
+                            <input class="form-control" type="text" th:field="${listing.start_from}" id="start_from"
+                                   placeholder="DD-MM-YYYY">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info" for="room_description">Description (Same as Account)</label>
+                            <input class="form-control" type="text" th:field="${listing.description}"
+                                   id="room_description" placeholder="room_description">
+                        </div>
+                        <div class="form-group" style="align:center">
+                            <input type="hidden" th:field="${user.id}">
+                            <input type="hidden" th:field="${user.name}">
+                            <input type="hidden" th:field="${user.email}">
+                            <input type="hidden" th:field="${user.password}">
+                            <input type="hidden" th:field="${user.description}">
+                            <input type="hidden" th:field="${user.nationality}">
+                            <input type="hidden" th:field="${user.phone}">
+                            <input class="btn btn-info btn-md" type="submit" value="Add Lisiting">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<form th:action="@{/admin_home}" th:object="${user}" method="get">
-    <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{name}">
-    <input type="hidden" th:field="*{email}">
-    <input type="hidden" th:field="*{password}">
-    <input type="hidden" th:field="*{description}">
-    <input type="hidden" th:field="*{nationality}">
-    <input type="hidden" th:field="*{phone}">
-    <input type="submit" value="Go Back to Listings">
-</form>
+<div class="test" >
+    <form th:action="@{/admin_home}" th:object="${user}" method="get">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{name}">
+        <input type="hidden" th:field="*{email}">
+        <input type="hidden" th:field="*{password}">
+        <input type="hidden" th:field="*{description}">
+        <input type="hidden" th:field="*{nationality}">
+        <input type="hidden" th:field="*{phone}">
+        <input class="btn btn-info btn-md" type="submit" value="Go Back to Listings">
+    </form>
+</div>
 </body>
 </html>

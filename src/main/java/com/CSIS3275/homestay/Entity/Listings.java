@@ -14,8 +14,6 @@ import javax.persistence.Id;
 @Component
 @EqualsAndHashCode
 @ToString
-@Getter
-@Setter
 @Document(collection = "Listings")
 public class Listings {
     @Id
@@ -26,7 +24,5 @@ public class Listings {
     String price;
     String description;
     String start_from;
-    //admin's user id. Not changing name to avoid breaks
-    //thanks for the comments though
     String adminEmailId;
 }
