@@ -218,6 +218,8 @@ public class Controller {
         }
     }
 
+
+
     @PostMapping("/add_listing")
     public String addListing(Model model, @ModelAttribute("listing") Listings listing, @ModelAttribute("user") User user) {
 //        Listings listings = listingRepository.findById(listingid).orElse(null);
