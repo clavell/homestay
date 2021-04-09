@@ -14,60 +14,49 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
-                    <form action="#" th:action="@{/add_listing}" th:object="${listing}" method="post">
-	
+                    <form action="#" th:action="@{/add_listing}" method="post">
 						<h1 class="text-center text-info">Add a Listing</h1>
 						<h3 class="text-center text-info">Please Fill the Following Details</h3><br>
-	
 						<div class="form-group">
-							<label for="address">Address</label>
-							<input class="form-control" type="text" th:field="*{address}" id="address" placeholder="Address">
-							<span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span><br>
+							<label class="text-info" for="address">Address</label>
+							<input class="form-control" type="text" th:field="${listing.address}" id="address" placeholder="Address">
 						</div>
-	
+<!--						<div class="form-group">-->
+<!--							<label class="text-info" for="adminEmailId">Email for Contact</label>-->
+<!--							<input class="form-control" type="text" th:field="${listing.adminEmailId}" id="adminEmailId" placeholder="adminEmailId" value="${user.email}" readonly>-->
+<!--						</div>-->
 						<div class="form-group">
-							<label for="duration">Duration</label>
-							<input class="form-control" type="text" th:field="*{duration}" id="duration" placeholder="Duration">
-							<span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span><br>
-						</div>
-	
-	
-						<div class="form-group">
-							<label for="adminEmailId">Email for Contact</label>
-							<input class="form-control" type="text" th:field="*{adminEmailId}" id="adminEmailId" placeholder="adminEmailId">
-							<span th:if="${#fields.hasErrors('adminEmailId')}" th:errors="*{adminEmailId}"></span><br>
-						</div>
-	
-	
-						<div class="form-group">
-							<label for="price">Price</label>
-							<input class="form-control" type="text" th:field="*{price}" id="price" placeholder="price"><br><br>
-							<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-						</div>
-	
-						<div class="form-group">
-							<label for="start_from">Starting Date</label>
-							<input class="form-control" type="text" th:field="*{start_from}" id="start_from" placeholder="DD-MM-YYYY"><br><br>
-							<span th:if="${#fields.hasErrors('start_from')}" th:errors="*{start_from}"></span>
+							<label class="text-info" for="duration">Duration (In Months)</label>
+							<input class="form-control" type="text" th:field="${listing.duration}" id="duration" placeholder="Duration">
 						</div>
 						<div class="form-group">
-							<label for="room_description">Description</label>
-							<input class="form-control" type="text" th:field="*{room_description}" id="room_description" placeholder="room_description">
-							<span th:if="${#fields.hasErrors('room_description')}" th:errors="*{room_description}"></span><br>
+							<label class="text-info" for="price">Price (In CAD)</label>
+							<input class="form-control" type="text" th:field="${listing.price}" id="price" placeholder="price">
 						</div>
 						<div class="form-group">
-							<input class="form-control" type="hidden" th:field="*{id}">
+							<label class="text-info" for="start_from">Starting Date</label>
+							<input class="form-control" type="text" th:field="${listing.start_from}" id="start_from" placeholder="DD-MM-YYYY"><br><br>
+						</div>
+						<div class="form-group">
+							<label class="text-info" for="room_description">Description (Same as Account)</label>
+							<input class="form-control" type="text" th:field="${listing.description}" id="room_description" placeholder="room_description">
+						</div>
+						<div class="form-group">
+							<input type="hidden" th:field="${user.id}">
+							<input type="hidden" th:field="${user.name}">
+							<input type="hidden" th:field="${user.email}">
+							<input type="hidden" th:field="${user.password}">
+							<input type="hidden" th:field="${user.description}">
+							<input type="hidden" th:field="${user.nationality}">
+							<input type="hidden" th:field="${user.phone}">
 							<input class="form-control" type="submit" value="Add Lisiting">
 						</div>
 					</form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 <form th:action="@{/admin_home}" th:object="${user}" method="get">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{name}">
@@ -78,7 +67,5 @@
     <input type="hidden" th:field="*{phone}">
     <input type="submit" value="Go Back to Listings">
 </form>
-
-
 </body>
 </html>

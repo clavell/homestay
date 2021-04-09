@@ -219,12 +219,24 @@ public class Controller {
     }
 
 
+    @GetMapping("/add_listing")
+    public String addlistingget(Model model, @ModelAttribute("user") User user, @ModelAttribute("listing") Listings listing){
+        model.addAttribute("user",userRepository.findByEmail(user.getEmail()));
+        return "add_listing_admin";
+    }
 
     @PostMapping("/add_listing")
     public String addListing(Model model, @ModelAttribute("listing") Listings listing, @ModelAttribute("user") User user) {
 //        Listings listings = listingRepository.findById(listingid).orElse(null);
         model.addAttribute("user",userRepository.findByEmail(user.getEmail()));
-        listingRepository.insert(listing);
+        Listings insert = new Listings();
+        insert.setAddress(listing.getAddress());
+        insert.setDescription(listing.getAddress());
+        insert.setDuration(listing.getDuration());
+        insert.setPrice(listing.getPrice());
+        insert.setStart_from(listing.getStart_from());
+        insert.setAdminEmailId(user.getEmail());
+        listingRepository.insert(insert);
         model.addAttribute("listings", listingRepository.AdminEmailId(user.getEmail()));
         return "admin_home";
     }
