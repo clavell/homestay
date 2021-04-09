@@ -193,6 +193,30 @@ public class Controller {
         return "admin_home";
     }
 
+    @GetMapping("/admin_profile")
+    public String admin_profile(Model model, @ModelAttribute("user") User user) {
+        model.addAttribute("user", user);
+        return "admin_profile";
+    }
+
+    @PostMapping("/admin_profile")
+    public String admin_profile_update(Model model, @ModelAttribute("user") User user) {
+        User userFromDB = userRepository.findById(user.getId()).get();
+        if (user.getPassword().equals(userFromDB.getPassword())) {
+            userFromDB.setName(user.getName());
+            userFromDB.setEmail(user.getEmail());
+            userFromDB.setNationality(user.getNationality());
+            userFromDB.setDescription(user.getDescription());
+            userFromDB.setPhone(user.getPhone());
+            userRepository.deleteById(userFromDB.getId());
+            userRepository.insert(userFromDB);
+            model.addAttribute("user", userFromDB);
+            return "admin_profile";
+        } else {
+            model.addAttribute("user", userFromDB);
+            return "admin_profile";
+        }
+    }
 
     @PostMapping("/add_listing")
     public String addListing(Model model, @ModelAttribute("listing") Listings listing, @ModelAttribute("user") User user) {
