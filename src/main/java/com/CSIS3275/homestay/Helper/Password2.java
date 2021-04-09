@@ -1,4 +1,4 @@
-package com.CSIS3275.homestay.Entity;
+package com.CSIS3275.homestay.Helper;
 
 public class Password2 {
     private String value;

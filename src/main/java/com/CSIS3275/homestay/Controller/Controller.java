@@ -1,7 +1,7 @@
 package com.CSIS3275.homestay.Controller;
 
 import com.CSIS3275.homestay.Entity.Listings;
-import com.CSIS3275.homestay.Entity.Password2;
+import com.CSIS3275.homestay.Helper.Password2;
 import com.CSIS3275.homestay.Entity.Status;
 import com.CSIS3275.homestay.Entity.User;
 import com.CSIS3275.homestay.Repository.ListingRepository;
